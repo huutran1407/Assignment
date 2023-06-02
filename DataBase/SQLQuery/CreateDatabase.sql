@@ -1,32 +1,35 @@
+create database PRJ_Assignment_OldButGold
+
 use PRJ_Assignment_OldButGold
 
 create table category(
 	Category_Id int NOT NULL UNIQUE,
-	Category varchar(255),
+	Category nvarchar(255),
 	Category_SampleIMG text,
 
 	PRIMARY KEY (Category_Id)
 )
 
 create table Users(
-	UserId int NOT NULL UNIQUE,
+	UserId varchar(255) NOT NULL UNIQUE,
 	UserName varchar(255) NOT NULL,
-	User_FullName varchar(255),
+	User_FullName nvarchar(255),
 	Password varchar(255) NOT NULL,
 	isAdmin int,
 	Contact varchar(255),
+	DisplayName nvarchar(255)
 
 	Primary key (UserId),
 )
 
 create table Product(
 	Pro_Id int NOT NULL UNIQUE,
-	Pro_Name varchar(255),
+	Pro_Name nvarchar(255),
 	Pro_Quantity int,
 	Pro_Type int,
-	Pro_Seller int,
+	Pro_Seller varchar(255),
 	Pro_img text,
-	Pro_description text,
+	Pro_description ntext,
 	Pro_Price float,
 
 	Primary key (Pro_Id),
@@ -35,7 +38,7 @@ create table Product(
 )
 
 create table ordered(
-	Order_Owner int NOT NULL,
+	Order_Owner varchar(255) NOT NULL,
 	OrderId int NOT NULL UNIQUE,
 
 	PRIMARY KEY (OrderId),
@@ -53,4 +56,5 @@ create table Order_Detail(
 	FOREIGN KEY (Product_Id) REFERENCES Product(Pro_Id),
 	FOREIGN KEY (OrderId) REFERENCES ordered(OrderId) 
 )
+
 
