@@ -12,10 +12,11 @@ create table category(
 
 create table Users(
 	UserId varchar(255) NOT NULL UNIQUE,
-	UserName varchar(255) NOT NULL,
+	UserName varchar(255) NOT NULL UNIQUE,
 	User_FullName nvarchar(255),
 	Password varchar(255) NOT NULL,
 	isAdmin int,
+	Email varchar(255),
 	Contact varchar(255),
 	DisplayName nvarchar(255)
 
@@ -23,7 +24,7 @@ create table Users(
 )
 
 create table Product(
-	Pro_Id int NOT NULL UNIQUE,
+	Pro_Id varchar(255) NOT NULL UNIQUE,
 	Pro_Name nvarchar(255),
 	Pro_Quantity int,
 	Pro_Type int,
@@ -39,15 +40,15 @@ create table Product(
 
 create table ordered(
 	Order_Owner varchar(255) NOT NULL,
-	OrderId int NOT NULL UNIQUE,
+	OrderId varchar(255) NOT NULL UNIQUE,
 
 	PRIMARY KEY (OrderId),
 	FOREIGN KEY (Order_Owner) REFERENCES Users(UserId)
 )
 
 create table Order_Detail(
-	OrderId int NOT NULL,
-	Product_Id int NOT NULL,
+	OrderId varchar(255) NOT NULL,
+	Product_Id varchar(255) NOT NULL,
 	Product_Quantity int,
 	Order_Date date NOT NULL,
 	OrderEnd_Date date,
