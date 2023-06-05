@@ -2,13 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAL;
+package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +19,7 @@ public class DBContext {
             return DriverManager.getConnection(url, userID, password);            
         }
         private final String serverName = "localhost";
-        private final String dbName = "PRJ_Assignment_OldButGold";  
+        private final String dbName = "PRJ_Assignment_OldButGold"; 
         private final String portNumber = "1433";
         private final String userID = "sa";
         private final String password = "12345678";

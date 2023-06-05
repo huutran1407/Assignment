@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAL;
+package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ import entity.Users;
  */
 public class UsersDAO  {
     DBContext conn = new DBContext();
-    public ArrayList<Users> getStudents() {
+    public ArrayList<Users> getUsers() {
         ArrayList<Users> students = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Users]";
@@ -43,17 +43,23 @@ public class UsersDAO  {
         return students;
     }
     
-    public String getUserId(String Username){
+    public String checkLogin(String Username,String Password){
         String sql = "SELECT * FROM Users s\n"
                     + "WHERE s.UserName = ?";
-        try {
+         try {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, Username);
             ResultSet rs = statement.executeQuery();
-            return rs.getString("UsersId");
+            if(rs.next()){
+                if(Password.equals(rs.getString("Password"))){
+                    return "Success";
+                }
+                return "Incorrect Password";
+            }
         } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return null;
+         return "Incorrect Username";
     }
     
     public Users getUsers(String id){
