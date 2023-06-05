@@ -11,7 +11,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Sign up/Login Form</title>
-        <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/LoginStyle.css">
 
     </head>
     <body>
