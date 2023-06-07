@@ -12,21 +12,21 @@
         <title>Login V1</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="${pageContext.request.contextPath}/View/images/icons/favicon.ico"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/vendor/bootstrap/css/bootstrap.min.css"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/vendor/animate/animate.css"/>
         <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/View/images/icons/favicon.ico"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/vendor/css-hamburgers/hamburgers.min.css"/>
         <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/vendor/select2/select2.min.css"/>
         <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/vendor/animate/animate.css">
-        <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/vendor/css-hamburgers/hamburgers.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/vendor/select2/select2.min.css">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/LoginStyle.css">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/util.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/LoginStyle.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/util.css"/>
         <!--===============================================================================================-->
     </head>
     <body>
