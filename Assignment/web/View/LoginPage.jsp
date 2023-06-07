@@ -100,7 +100,7 @@
         <script >
             $('.js-tilt').tilt({
                 scale: 1.1
-            })
+            });
         </script>
         <!--===============================================================================================-->
         <script src="${pageContext.request.contextPath}/View/js/main.js"></script>
