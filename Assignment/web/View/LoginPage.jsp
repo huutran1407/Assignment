@@ -40,7 +40,7 @@
                         <img src="${pageContext.request.contextPath}/View/assets/images/img-01.png" alt="IMG">
                     </div>
 
-                    <form action="Login" method="Post" class="login100-form validate-form">
+                    <form action="${pageContext.request.contextPath}/Login" method="Post" class="login100-form validate-form">
                         <span class="login100-form-title">
                             Member Login
                         </span>

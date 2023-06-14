@@ -38,7 +38,7 @@
             <div class="container-SignIn">
                 <div class="wrap-SignIn">
                     <!-- SignIn Form -->
-                    <form action="SignIn" method="Post" class="SignIn-form validate-form">
+                    <form action="${pageContext.request.contextPath}/SignIn" method="POST" class="SignIn-form validate-form">
                         <span class="SignIn-form-title">
                             Member Sign In
                         </span>
