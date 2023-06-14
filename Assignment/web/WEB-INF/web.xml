@@ -12,6 +12,10 @@
         <servlet-name>SignIn</servlet-name>
         <servlet-class>controller.SignIn</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>controller.LogOut</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -24,12 +28,16 @@
         <servlet-name>SignIn</servlet-name>
         <url-pattern>/SignIn</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/LogOut</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>View/LoginPage.jsp</welcome-file>
+        <welcome-file>View/Home.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

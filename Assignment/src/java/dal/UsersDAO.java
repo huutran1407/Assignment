@@ -91,6 +91,7 @@ public class UsersDAO  {
         return "Success";
     }
     
+    //check if the Username is existed
     public boolean isExistUsername(String Username){
         String sql = "Select * From Users\n"
                 + "where UserName LIKE ?";
@@ -145,6 +146,7 @@ public class UsersDAO  {
         return "Fail";
     }
     
+    //getUsersByID
     public Users getUsersByID(String id){
         try {
             String sql = "SELECT * FROM Users s\n"
@@ -168,6 +170,24 @@ public class UsersDAO  {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    //get UserID
+    public String getUserId(String User){
+        String sql = "SELECT UserId FROM Users s\n"
+                    + "WHERE s.Email = ? OR s.UserName = ?";
+         try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, User);
+            statement.setString(2, User);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return rs.getString("UserId");
+             }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return "Fail";
     }
     
     public void updateUser(String uName, String uFullName, String uPassword, boolean uIsAdmin, String uEmail, String uContact, String uDisplayName, String uId){

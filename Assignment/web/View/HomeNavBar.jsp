@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Home
-    Created on : Jun 5, 2023, 1:20:02 PM
+    Document   : HomeNavBar
+    Created on : Jun 15, 2023, 12:06:35 AM
     Author     : VHC
 --%>
 
@@ -12,9 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@include file="PageHeader.jsp" %>
+        <h1>Hello World!</h1>
+        <script>
+         console.log("${UserId}");
+        </script>
     </body>
-    <script>
-        console.log("${UserId}");
-    </script>
 </html>

@@ -67,14 +67,14 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String Username = request.getParameter("Username");
-        String DisplayName = request.getParameter("DisplayName");
-        String pass = request.getParameter("Password");
+        String email = request.getParameter("email").trim();
+        String Username = request.getParameter("Username").trim();
+        String DisplayName = request.getParameter("DisplayName").trim();
+        String pass = request.getParameter("Password").trim();
         
         UsersDAO users = new UsersDAO();
         String SignInMess;
-        if(DisplayName == null){
+        if(DisplayName.isEmpty()){
             SignInMess = users.SignInUser(email, Username, Username, pass);
         }else{
             SignInMess = users.SignInUser(email, Username, DisplayName, pass);
