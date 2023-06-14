@@ -136,6 +136,6 @@
             });
         </script>
 
-        <script src="${pageContext.request.contextPath}/View/assets/js/LoginJS.js?version=1"></script>
+        <script src="${pageContext.request.contextPath}/View/assets/js/LoginJS.js"></script>
     </body>
 </html>

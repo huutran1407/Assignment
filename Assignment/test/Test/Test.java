@@ -15,6 +15,6 @@ public class Test {
     public static void main(String[] args) {
         UsersDAO test = new UsersDAO();
 //        System.out.println(test.SignInUser("abc", "Test", "Test1", "123"));
-        test.deleteUser("US001");
+        test.deleteUser("US007");
     }
 }
