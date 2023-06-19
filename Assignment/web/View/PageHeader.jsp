@@ -13,21 +13,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Untitled</title>
-        <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/View/assets/images/icons/favicon.ico?version=1"/>
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/vendor/bootstrap/css/bootstrap.min.css?version=1">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css?version=1">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/vendor/animate/animate.css?version=1">
-        <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/vendor/css-hamburgers/hamburgers.min.css?version=1">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/vendor/select2/select2.min.css?version=1">
-        <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/util.css?version=1">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/HeaderStyle.css?version=1"/>
     </head>
 
     <body>
@@ -73,7 +58,17 @@
                             <c:if test="${UserId!=null}">
                                 <div class="flex-m">
                                     <span class="navbar-text"> 
-                                        <a href="#" class="login fa fa-user"></a>
+                                        <a href="#" class="login fa fa-user dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-size: 30px; margin-right: 20px"></a>
+                                        <div class="dropdown-menu" style="right: auto; left: auto;" role="menu">
+                                        <a class="dropdown-item" role="presentation" href="#">First Item</a>
+                                        <a class="dropdown-item" role="presentation" href="#">Second Item</a>
+                                        <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                                        <c:choose>
+                                            <c:when test="${UserId.substring(0,2)=='AD'}">
+                                                <a class="dropdown-item" role="presentation" href="#">Admin Item</a>
+                                            </c:when>
+                                        </c:choose>
+                                        </div>
                                     </span>
                                     <form action="${pageContext.request.contextPath}/LogOut" method="post">
                                         <button class="btn btn-light action-button" role="button" href="#">
@@ -87,19 +82,6 @@
                 </nav>
             </div>
         </div>
-
-
-        <!--===============================================================================================-->	
-        <script src="${pageContext.request.contextPath}/View/assets/vendor/jquery/jquery-3.2.1.min.js?version=1"></script>
-        <!--===============================================================================================-->
-        <script src="${pageContext.request.contextPath}/View/assets/vendor/bootstrap/js/popper.js?version=1"></script>
-        <script src="${pageContext.request.contextPath}/View/assets/vendor/bootstrap/js/bootstrap.min.js?version=1"></script>
-        <!--===============================================================================================-->
-        <script src="${pageContext.request.contextPath}/View/assets/vendor/select2/select2.min.js?version=1"></script>
-        <!--===============================================================================================-->
-        <script src="${pageContext.request.contextPath}/View/assets/vendor/tilt/tilt.jquery.min.js?version=1"></script>
-
-
     </body>
 
 </html>

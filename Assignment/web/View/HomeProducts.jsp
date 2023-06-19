@@ -12,9 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <script>
-         console.log("${UserId}");
-        </script>
+        <h1 class="text-center mt-5 mb-5 font-weight-normal" style="font-size: 20px;">DANH MỤC SẢN PHẨM</h1>
+        <div>
+
+
+        </div>
+
+
     </body>
 </html>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Home
-    Created on : Jun 5, 2023, 1:20:02 PM
+    Document   : CategoryAdd
+    Created on : Jun 19, 2023, 7:56:50 AM
     Author     : VHC
 --%>
 
@@ -28,13 +28,10 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/HeaderStyle.css?version=1"/>
     </head>
     <body>
-        <%@include file="PageHeader.jsp" %>
-        <div id="Content">
-            <%@include file="HomeProducts.jsp" %>
-        </div>
         
         
-        <!--===============================================================================================-->	
+        
+         <!--===============================================================================================-->	
         <script src="${pageContext.request.contextPath}/View/assets/vendor/jquery/jquery-3.2.1.min.js?version=1"></script>
         <!--===============================================================================================-->
         <script src="${pageContext.request.contextPath}/View/assets/vendor/bootstrap/js/popper.js?version=1"></script>
@@ -43,14 +40,5 @@
         <script src="${pageContext.request.contextPath}/View/assets/vendor/select2/select2.min.js?version=1"></script>
         <!--===============================================================================================-->
         <script src="${pageContext.request.contextPath}/View/assets/vendor/tilt/tilt.jquery.min.js?version=1"></script>
-        <script>
-        console.log("${UserId}");
-        console.log("${UserId.substring(0,2)=='AD'}");
-        
-        function ChangeContent(x){
-            var content = document.getElementById("Content");
-            content.innerHTML = x;
-        }
-        </script>
     </body>
 </html>

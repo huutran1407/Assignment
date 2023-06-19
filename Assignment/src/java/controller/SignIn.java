@@ -87,7 +87,6 @@ public class SignIn extends HttpServlet {
         }else{
             request.getRequestDispatcher("/View/SigninPage.jsp").forward(request, response);
         }
-        
     }
 
     /** 
