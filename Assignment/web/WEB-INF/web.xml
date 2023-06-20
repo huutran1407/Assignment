@@ -16,6 +16,10 @@
         <servlet-name>LogOut</servlet-name>
         <servlet-class>controller.LogOut</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryUpload</servlet-name>
+        <servlet-class>controller.CategoryUpload</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>LogOut</servlet-name>
         <url-pattern>/LogOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryUpload</servlet-name>
+        <url-pattern>/CategoryUpload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

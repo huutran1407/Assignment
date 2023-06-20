@@ -10,8 +10,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        
-         <!--===============================================================================================-->	
+
+        <!--===============================================================================================-->	
         <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/View/assets/images/icons/favicon.ico?version=1"/>
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/vendor/bootstrap/css/bootstrap.min.css?version=1">
@@ -25,13 +25,25 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/vendor/select2/select2.min.css?version=1">
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/util.css?version=1">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/HeaderStyle.css?version=1"/>
     </head>
+
     <body>
-        
-        
-        
-         <!--===============================================================================================-->	
+        <form class="CategoryForm" action="${pageContext.request.contextPath}/CategoryUpload" method="post" enctype="multipart/form-data">
+            <div class="inputValue">
+                Category Name
+                <input type="text" name="CategoryName">
+            </div>
+            <div class="inputValue">
+                Category Sample img
+                <input type="file" accept="image/*" name="img" size="50">
+            </div>
+            <button type="submit" name="submit">
+                Upload
+            </button>
+        </form>
+
+
+        <!--===============================================================================================-->	
         <script src="${pageContext.request.contextPath}/View/assets/vendor/jquery/jquery-3.2.1.min.js?version=1"></script>
         <!--===============================================================================================-->
         <script src="${pageContext.request.contextPath}/View/assets/vendor/bootstrap/js/popper.js?version=1"></script>
