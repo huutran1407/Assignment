@@ -20,6 +20,10 @@
         <servlet-name>CategoryUpload</servlet-name>
         <servlet-class>controller.CategoryUpload</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryDelete</servlet-name>
+        <servlet-class>controller.CategoryDelete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>CategoryUpload</servlet-name>
         <url-pattern>/CategoryUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryDelete</servlet-name>
+        <url-pattern>/CategoryDelete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
