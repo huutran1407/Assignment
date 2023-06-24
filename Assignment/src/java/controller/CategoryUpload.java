@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,10 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.nio.file.*;
-import static jdk.nashorn.internal.objects.NativeError.getFileName;
 
 /**
  *
@@ -85,39 +83,54 @@ public class CategoryUpload extends HttpServlet {
             System.out.println(filePart.getName());
             System.out.println(filePart.getSize());
             System.out.println(filePart.getContentType());
-            
-            
+
             String path = Paths.get(getServletContext().getRealPath("")).getParent().getParent().toString()
-                    +File.separator + "web"
-                    +File.separator+"Database"
-                    +File.separator+"IMG" ;
+                    + File.separator + "web"
+                    + File.separator + "Database"
+                    + File.separator + "IMG";
+            String StorePath = "Database"
+                    + File.separator + "IMG"
+                    + File.separator + filePart.getSubmittedFileName();
             
-            if(UploadedFile(filePart,path)){
-                out.println("File Uploaded To "+ path);
-            }else{
-                out.println("Fail");
+            String Mess = "";
+            if (UploadedFile(filePart, path)) {
+                CategoryDAO DAO = new CategoryDAO();
+                String mess = DAO.insertCategory(name, StorePath);
+                if (mess.equalsIgnoreCase("Success")) {
+                    Mess = "Success insert Category into Database!!";
+                } else {
+                    Mess = "Fail to insert into database";
+                }
+                
+                request.setAttribute("Mess", Mess);
+                request.getRequestDispatcher("/View/Home.jsp?Content=CategoryList.jsp").forward(request, response);
             }
-        }else{
-            out.println("file part null Fail");
         }
-        
+
     }
-    
-    private boolean UploadedFile(Part part, String uploadPath){
+
+    private boolean UploadedFile(Part part, String uploadPath) {
         boolean test = false;
-        try{
+        try {
             File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) uploadDir.mkdir();
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            
             String fileName = part.getSubmittedFileName();
+            File f = new File(uploadPath + File.separator + fileName);
+            if (f.exists() && !f.isDirectory()) {
+                fileName = fileName.substring(0, fileName.lastIndexOf("."))+"2"+fileName.substring(fileName.lastIndexOf("."));
+            }
             part.write(uploadPath + File.separator + fileName);
             test = true;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return test;
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

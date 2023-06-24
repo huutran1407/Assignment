@@ -9,11 +9,11 @@ package entity;
  * @author VHC
  */
 public class Category {
-    private int Category_Id;
+    private String Category_Id;
     private String Category;
     private String Category_Img;
 
-    public Category(int Category_Id, String Category, String Category_Img) {
+    public Category(String Category_Id, String Category, String Category_Img) {
         this.Category_Id = Category_Id;
         this.Category = Category;
         this.Category_Img = Category_Img;
@@ -22,11 +22,11 @@ public class Category {
     public Category() {
     }
 
-    public int getCategory_Id() {
+    public String getCategory_Id() {
         return Category_Id;
     }
 
-    public void setCategory_Id(int Category_Id) {
+    public void setCategory_Id(String Category_Id) {
         this.Category_Id = Category_Id;
     }
 

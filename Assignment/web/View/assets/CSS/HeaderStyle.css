@@ -1,13 +1,11 @@
 .header-blue {
-    background:linear-gradient(135deg, #172a74, #21a9af);
+    background: linear-gradient(5deg, #c850c0, #4158d0);
     background-color:#184e8e;
     font-family:'Source Sans Pro', sans-serif;
   }
   
   .header-blue .navbar {
     background:transparent;
-    padding-top:.75rem;
-    padding-bottom:.75rem;
     color:#fff;
     border-radius:0;
     box-shadow:none;
@@ -16,8 +14,6 @@
   
   @media (min-width:768px) {
     .header-blue .navbar {
-      padding-top:1rem;
-      padding-bottom:1rem;
     }
   }
   

@@ -1,0 +1,17 @@
+.Item{
+    text-align: center;
+    height: 300px;
+}
+
+.SampleImg{
+    width: 90%;
+    height: 70%;
+    cursor: pointer;
+}
+
+.Item-name{
+    font-size: 20px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+

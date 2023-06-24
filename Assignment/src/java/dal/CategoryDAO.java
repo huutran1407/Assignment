@@ -21,13 +21,13 @@ public class CategoryDAO  {
     public ArrayList<Category> getCategories() {
         ArrayList<Category> obj = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Users]";
+            String sql = "SELECT * FROM category";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {
                 Category s = new Category();
-                s.setCategory_Id(rs.getInt("Category_Id"));
+                s.setCategory_Id(rs.getString("Category_Id"));
                 s.setCategory(rs.getString("Category"));
                 s.setCategory_Img(rs.getString("Category_SampleIMG"));
                 obj.add(s);
@@ -46,7 +46,7 @@ public class CategoryDAO  {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Category s = new Category();
-                s.setCategory_Id(rs.getInt("Category_Id"));
+                s.setCategory_Id(rs.getString("Category_Id"));
                 s.setCategory(rs.getString("Category"));
                 s.setCategory_Img(rs.getString("Category_SampleIMG"));
                 return s;
@@ -58,17 +58,43 @@ public class CategoryDAO  {
         return null;
     }
     
-    public void insertCategory(String sname, String sgender, String sdob ) throws Exception {
+    public String insertCategory(String categoryName, String CategoryIMG ){
+        String mess = "Fail";
         try {
-            String sql = "INSERT INTO Category VALUES(?,?,?)";
+            String CategoryId = getNewId();
+            String sql = "INSERT INTO category "
+                    + "VALUES(?,?,?)";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
-            statement.setString(1, sname);
-            statement.setString(3, sdob);
-            statement.setString(2, sgender);
+            statement.setString(1, CategoryId);
+            statement.setString(2, categoryName);
+            statement.setString(3, CategoryIMG);
             statement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
+            return "Success";
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return mess;
+    }
+    
+    //funtion to get ID for new Category
+    public String getNewId(){
+        String getId = "SELECT max(Category_Id) as ID FROM category";
+        try{
+            PreparedStatement ID = conn.getConnection().prepareStatement(getId);
+            ResultSet IDrs = ID.executeQuery();
+             if(IDrs.next()){
+                try{
+                    String IDNUM = IDrs.getString("ID").substring(2);
+                    int NUM = Integer.parseInt(IDNUM)+1;
+                    return "CA" + String.format("%03d",NUM);
+                }catch(NullPointerException ex){
+                    return "CA000";
+                }
+            }
+        }catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "Fail";
     }
 
     public void updateCategory(int cId, String cname, String cIMG) throws Exception {
@@ -88,16 +114,16 @@ public class CategoryDAO  {
         }
     }
 
-    public void deleteStudent(int id) throws Exception {
+    public void deleteById(String id){
         try {
             DBContext conn2 = new DBContext();
-            String sql = "DELETE FROM Category\n"
+            String sql = "DELETE FROM category\n"
                     + "WHERE Category_Id=?";
             PreparedStatement statement = conn2.getConnection().prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setString(1, id);
             statement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
