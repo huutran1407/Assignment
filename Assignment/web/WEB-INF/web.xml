@@ -24,6 +24,10 @@
         <servlet-name>CategoryDelete</servlet-name>
         <servlet-class>controller.CategoryDelete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryUpdate</servlet-name>
+        <servlet-class>controller.CategoryUpdate</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>CategoryDelete</servlet-name>
         <url-pattern>/CategoryDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryUpdate</servlet-name>
+        <url-pattern>/CategoryUpdate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

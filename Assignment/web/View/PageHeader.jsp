@@ -21,7 +21,7 @@
         <div>
             <div class="header-blue">
                 <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-                    <a class="navbar-brand col-2" href="Home.jsp">Chợ Đồ Cũ</a>
+                    <a class="navbar-brand col-2" href="${pageContext.request.contextPath}/View/Home.jsp">Chợ Đồ Cũ</a>
                     <!--                        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
                                                 <span class="sr-only">Toggle navigation</span>
                                                 <span class="navbar-toggler-icon"></span>
@@ -62,12 +62,12 @@
                                 <span class="navbar-text"> 
                                     <a href="#" class="login fa fa-user dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-size: 30px; margin-right: 20px"></a>
                                     <div class="dropdown-menu" style="right: auto; left: auto;" role="menu">
-                                        <a class="dropdown-item" role="presentation" href="#">First Item</a>
+                                        <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/View/Home.jsp?Content=UserProfile.jsp">Change Profile</a>
                                         <a class="dropdown-item" role="presentation" href="#">Second Item</a>
                                         <a class="dropdown-item" role="presentation" href="#">Third Item</a>
                                         <c:choose>
                                             <c:when test="${UserId.substring(0,2)=='AD'}">
-                                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/View/Home.jsp?Content=CategoryList.jsp">Admin Item</a>
+                                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/View/Home.jsp?Content=CategoryList.jsp">Categories List</a>
                                             </c:when>
                                         </c:choose>
                                     </div>

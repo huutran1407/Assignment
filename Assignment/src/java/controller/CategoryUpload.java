@@ -20,7 +20,9 @@ import java.nio.file.*;
  *
  * @author VHC
  */
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+  maxFileSize = 1024 * 1024 * 5, 
+  maxRequestSize = 1024 * 1024 * 5 * 5)
 public class CategoryUpload extends HttpServlet {
 
     /**
@@ -75,7 +77,6 @@ public class CategoryUpload extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         String name = request.getParameter("CategoryName");
         Part filePart = request.getPart("img");
         if (filePart != null) {
@@ -103,7 +104,7 @@ public class CategoryUpload extends HttpServlet {
                 }
                 
                 request.setAttribute("Mess", Mess);
-                request.getRequestDispatcher("/View/Home.jsp?Content=CategoryList.jsp").forward(request, response);
+                response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
             }
         }
 

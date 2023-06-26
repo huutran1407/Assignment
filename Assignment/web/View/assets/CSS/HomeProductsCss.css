@@ -1,17 +1,25 @@
+.Item_List{
+    border: #333333 solid thin;
+    background-color: #edf0f2;
+    border-radius: 10px;
+}
+
 .Item{
     text-align: center;
-    height: 300px;
+    height: 134px;
+    width: 134px;
 }
 
 .SampleImg{
-    width: 90%;
-    height: 70%;
     cursor: pointer;
+    width: 84px;
+    height: 84px;
+    object-fit: fill;
 }
 
 .Item-name{
     font-size: 20px;
-    margin: 20px auto;
     cursor: pointer;
+    
 }
 

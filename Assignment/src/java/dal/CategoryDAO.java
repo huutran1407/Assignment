@@ -37,12 +37,12 @@ public class CategoryDAO  {
         }
         return obj;
     }
-    public Category getCategory(int id) throws Exception {
+    public Category getCategory(String id){
         try {
-            String sql = "SELECT * FROM Users s\n"
+            String sql = "SELECT * FROM category s\n"
                     + "WHERE s.Category_Id = ?";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setString(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Category s = new Category();
@@ -51,9 +51,8 @@ public class CategoryDAO  {
                 s.setCategory_Img(rs.getString("Category_SampleIMG"));
                 return s;
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -97,21 +96,23 @@ public class CategoryDAO  {
         return "Fail";
     }
 
-    public void updateCategory(int cId, String cname, String cIMG) throws Exception {
+    public boolean updateCategory(String Id, String name, String IMG){
         try {
-            String sql = "UPDATE [Category]\n"
+            String sql = "UPDATE category\n"
                     + "   SET"
-                    + "      ,[Category_Name] = ?\n"
-                    + "      ,[Category_SampleIMG] = ?\n"
-                    + " WHERE [Category_Id] = ?";
+                    + "      Category = ?\n"
+                    + "      ,Category_SampleIMG = ?\n"
+                    + " WHERE Category_Id = ?";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
-            statement.setString(1, cname);
-            statement.setString(2, cIMG);
-            statement.setInt(3, cId);
+            statement.setString(1, name);
+            statement.setString(2, IMG);
+            statement.setString(3, Id);
             statement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+            return false;
     }
 
     public void deleteById(String id){

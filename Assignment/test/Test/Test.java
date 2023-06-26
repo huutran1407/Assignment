@@ -23,8 +23,11 @@ public class Test {
 //        ArrayList<Category> obj = CategoryTest.getCategories();
 //        String name = obj.get(0).getCategory();
 //        System.out.println(name);
-        String fileName = "text.text.txt";
-        fileName = fileName.substring(0, fileName.lastIndexOf(".")) + "2" + fileName.substring(fileName.lastIndexOf("."));
-        System.out.println(fileName);
+//        String fileName = "text.text.txt";
+//        fileName = fileName.substring(0, fileName.lastIndexOf(".")) + "2" + fileName.substring(fileName.lastIndexOf("."));
+//        System.out.println(fileName);
+        CategoryTest.deleteById("CA002");
+//        CategoryTest.deleteById("CA004");
+//        CategoryTest.deleteById("CA005");
     }
 }

@@ -6,8 +6,6 @@
 
 function Confirm(title, msg, $true, $false, $link) { /*change*/
     
-    console.log('$link');
-    
     var $content = "<div class='dialog-ovelay'>" +
             "<div class='dialog'><header>" +
             " <h3> " + title + " </h3> " +
@@ -24,6 +22,7 @@ function Confirm(title, msg, $true, $false, $link) { /*change*/
             "</footer>" +
             "</div>" +
             "</div>";
+    
     $('body').prepend($content);
     $('.cancelAction, .fa-close').click(function () {
         $(this).parents('.dialog-ovelay').fadeOut(500, function () {

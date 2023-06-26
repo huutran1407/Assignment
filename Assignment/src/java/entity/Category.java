@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.io.File;
+
 /**
  *
  * @author VHC

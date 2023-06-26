@@ -22,14 +22,16 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/HomeProductsCss.css?version=1">
     </head>
     <body>
-        <h1 class="text-center mt-5 mb-5 font-weight-normal" style="font-size: 20px;">DANH MỤC SẢN PHẨM</h1>
-        <div class="flex-b w-full m-auto justify-content-center">
-            <c:forEach items="${obj}" var="o">
-                <div class="Item col-md-2 ml-2 mr-2">
-                    <img class="SampleImg img-fluid" src="${pageContext.request.contextPath}/${o.getCategory_Img()}" alt="alt"/>
-                    <div class="Item-name">${o.getCategory()}</div>
-                </div>
-            </c:forEach>
+        <h1 class="text-center m-b-0 m-t-30 font-weight-normal" style="font-size: 20px;">DANH MỤC SẢN PHẨM</h1>
+        <div class="Item_List w-75 m-r-auto m-l-auto m-t-18 m-b-28">
+            <div class="row justify-content-start p-t-30 p-b-30">
+                <c:forEach items="${obj}" var="o">
+                    <div class="Item col-md-2 m-t-10 m-b-10">
+                        <img class="SampleImg img-fluid bo-cir" src="${pageContext.request.contextPath}/${o.getCategory_Img()}" alt="alt"/>
+                        <div class="Item-name">${o.getCategory()}</div>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
     </body>
 </html>
