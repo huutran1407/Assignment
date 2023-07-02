@@ -18,6 +18,7 @@
     </head>
 
     <body>
+        <c:set var="UserId" value="${cookie.loginId.value}"></c:set>
         <div>
             <div class="header-blue">
                 <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">

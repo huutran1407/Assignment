@@ -5,14 +5,17 @@
 package controller;
 
 import dal.CategoryDAO;
+import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,6 +34,7 @@ public class CategoryDelete extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         CategoryDAO DAO = new CategoryDAO();
 
         String CategoryID = request.getParameter("CategoryId");
@@ -41,6 +45,8 @@ public class CategoryDelete extends HttpServlet {
         if (DelFile(path)) {
             DAO.deleteById(CategoryID);
         }
+        ArrayList<Category> CatList = DAO.getCategories();
+        session.setAttribute("CatList", CatList);
         response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
     }
 

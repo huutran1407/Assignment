@@ -5,20 +5,24 @@
 
 package controller;
 
+import dal.CategoryDAO;
+import dal.UsersDAO;
+import entity.Category;
+import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
  * @author VHC
  */
-public class LogOut extends HttpServlet {
+public class WebStart extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,18 +34,18 @@ public class LogOut extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.removeAttribute("UserId");
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ( cookie.getName().equals("loginId") ) {
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
-                }
-            }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet WebStart</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet WebStart at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        response.sendRedirect( "View/Home.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,7 +59,17 @@ public class LogOut extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        UsersDAO UDAO = new UsersDAO();
+        CategoryDAO CDAO = new CategoryDAO();
+        ArrayList<Users> userList = UDAO.getUsers();
+        ArrayList<Category> CatList = CDAO.getCategories();
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("UserList", userList);
+        session.setAttribute("CatList", CatList);
+        
+        
+        response.sendRedirect("View/Home.jsp");
     } 
 
     /** 

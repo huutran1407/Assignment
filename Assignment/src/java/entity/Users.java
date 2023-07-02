@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author VHC
@@ -14,11 +16,13 @@ public class Users {
     private String Password;
     private String UserFullName;
     private boolean isAdmin;
+    private boolean isBanned;
     private String Email;
     private String contact;
     private String DisplayName;
+    private Date joinDate;
 
-    public Users(String UserId, String UserName, String Password, String UserFullName, boolean isAdmin, String Email, String contact, String DisplayName) {
+    public Users(String UserId, String UserName, String Password, String UserFullName, boolean isAdmin,boolean isBanned ,String Email, String contact, String DisplayName,Date joinDate) {
         this.UserId = UserId;
         this.UserName = UserName;
         this.Password = Password;
@@ -27,6 +31,8 @@ public class Users {
         this.Email = Email;
         this.contact = contact;
         this.DisplayName = DisplayName;
+        this.joinDate = joinDate;
+        this.isBanned = isBanned;
     }
 
     public Users() {
@@ -64,12 +70,20 @@ public class Users {
         this.UserFullName = UserFullName;
     }
 
-    public boolean isIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setIsBanned(boolean isBanned) {
+        this.isBanned = isBanned;
     }
 
     public String getEmail() {
@@ -95,6 +109,15 @@ public class Users {
     public void setDisplayName(String DisplayName) {
         this.DisplayName = DisplayName;
     }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
+    
     
     
 }

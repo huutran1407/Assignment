@@ -5,6 +5,7 @@
 package controller;
 
 import dal.CategoryDAO;
+import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +13,19 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author VHC
  */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
-  maxFileSize = 1024 * 1024 * 5, 
-  maxRequestSize = 1024 * 1024 * 5 * 5)
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 public class CategoryUpload extends HttpServlet {
 
     /**
@@ -77,6 +80,7 @@ public class CategoryUpload extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String name = request.getParameter("CategoryName");
         Part filePart = request.getPart("img");
         if (filePart != null) {
@@ -88,48 +92,50 @@ public class CategoryUpload extends HttpServlet {
             String path = Paths.get(getServletContext().getRealPath("")).getParent().getParent().toString()
                     + File.separator + "web"
                     + File.separator + "Database"
-                    + File.separator + "IMG";
+                    + File.separator + "IMG"
+                    + File.separator + "Categories";
             String StorePath = "Database"
                     + File.separator + "IMG"
+                    + File.separator + "Categories"
                     + File.separator + filePart.getSubmittedFileName();
-            
-            String Mess = "";
-            if (UploadedFile(filePart, path)) {
-                CategoryDAO DAO = new CategoryDAO();
-                String mess = DAO.insertCategory(name, StorePath);
-                if (mess.equalsIgnoreCase("Success")) {
-                    Mess = "Success insert Category into Database!!";
-                } else {
-                    Mess = "Fail to insert into database";
-                }
+
+            String Mess = UploadedFile(filePart, path, name, StorePath);
                 
-                request.setAttribute("Mess", Mess);
-                response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
-            }
+            CategoryDAO DAO = new CategoryDAO();
+            request.setAttribute("Mess", Mess);
+            ArrayList<Category> CatList = DAO.getCategories();
+            session.setAttribute("CatList", CatList);
+            response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
         }
 
     }
 
-    private boolean UploadedFile(Part part, String uploadPath) {
-        boolean test = false;
+    private String UploadedFile(Part part, String uploadPath, String name, String StorePath) {
         try {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
-            
+
             String fileName = part.getSubmittedFileName();
             File f = new File(uploadPath + File.separator + fileName);
             if (f.exists() && !f.isDirectory()) {
-                fileName = fileName.substring(0, fileName.lastIndexOf("."))+"2"+fileName.substring(fileName.lastIndexOf("."));
+                fileName = fileName.substring(0, fileName.lastIndexOf(".")) + "2" + fileName.substring(fileName.lastIndexOf("."));
+                StorePath = StorePath.substring(0, StorePath.lastIndexOf(".")) + "2" + StorePath.substring(StorePath.lastIndexOf("."));
             }
             part.write(uploadPath + File.separator + fileName);
-            test = true;
+            CategoryDAO DAO = new CategoryDAO();
+            String mess = DAO.insertCategory(name, StorePath);
+            if (mess.equalsIgnoreCase("Success")) {
+                return "Success insert Category into Database!!";
+            } else {
+                return "Fail to insert into database";
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return test;
+        return "fail to create file";
     }
 
     /**

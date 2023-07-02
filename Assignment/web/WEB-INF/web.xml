@@ -28,6 +28,10 @@
         <servlet-name>CategoryUpdate</servlet-name>
         <servlet-class>controller.CategoryUpdate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WebStart</servlet-name>
+        <servlet-class>controller.WebStart</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -56,12 +60,16 @@
         <servlet-name>CategoryUpdate</servlet-name>
         <url-pattern>/CategoryUpdate</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WebStart</servlet-name>
+        <url-pattern>/start</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>View/Home.jsp</welcome-file>
+        <welcome-file>start</welcome-file>
     </welcome-file-list>
 </web-app>

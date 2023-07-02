@@ -14,11 +14,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <%
-            CategoryDAO DAO = new CategoryDAO();
-            ArrayList<Category> obj = DAO.getCategories();
-            request.setAttribute("obj",obj);
-        %>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/CategoryList.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/ConfirmBoxStyle.css">
     </head>
@@ -26,7 +21,7 @@
         <h1 class="text-center m-t-40">Categories List</h1>
         <div class="container mx-auto mt-4 text-center">
             <div class="row justify-content-around">
-                <c:forEach items="${obj}" var="s">
+                <c:forEach items="${sessionScope.CatList}" var="s">
 
                     <div id="${s.getCategory_Id()}" class="col-md-4" style="width: 300px">
                         <div class="card">
@@ -45,8 +40,8 @@
 
                 </c:forEach>
 
-                <div class="col-md-4" style="width: 300px" >
-                    <form class="Add_Card card" style="text-decoration: none;" action="${pageContext.request.contextPath}/CategoryUpload" method="post" enctype="multipart/form-data">
+                <div class="col-md-4" style="width: 300px;">
+                    <form class="Add_Card card" style="text-decoration: none; height: 500px;" action="${pageContext.request.contextPath}/CategoryUpload" method="post" enctype="multipart/form-data">
                         <div class="Add_Cat_IMG  inputValue">
                             <label id="imgInp" class="h-100" style="cursor: pointer;">
                                 <i class="imgInp_icon fa fa-4x fa-image pos-relative"></i>
@@ -91,7 +86,7 @@
                                                 + "</label>"
                                                 + "</div>"
                                                 + "<div class='card-body inputValue'>"
-                                                + "<input class='card-title' type='text' name='CategoryName' value=" + name + ">"
+                                                + "<input class='card-title' type='text' name='CategoryName' value='" + name + "'>"
                                                 + "<div class='card-subtitle mb-2 text-muted'>" + Id + "</div>"
                                                 + "<div class='card-function d-flex justify-content-between'>"
                                                 + "<div style='cursor: pointer;' class='btn mr-2 w-45' onclick='location.reload();'><i class='fa fa-remove'></i> Undo Edit</div>"

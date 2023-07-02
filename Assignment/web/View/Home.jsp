@@ -10,7 +10,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-
+        
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
         <!--===============================================================================================-->	
         <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/View/assets/images/icons/favicon.ico?version=1"/>
         <!--===============================================================================================-->
@@ -35,12 +36,6 @@
         %>
     </head>
     <body>
-        <%@include file="PageHeader.jsp" %>
-        <div id="Content">
-            <c:import url="<%=Content%>"></c:import>
-         </div>
-        <%@include file="PageFooter.jsp" %>
-
         <!--===============================================================================================-->	
         <script src="${pageContext.request.contextPath}/View/assets/vendor/jquery/jquery-3.2.1.min.js?version=1"></script>
         <!--===============================================================================================-->
@@ -50,6 +45,16 @@
         <script src="${pageContext.request.contextPath}/View/assets/vendor/select2/select2.min.js?version=1"></script>
         <!--===============================================================================================-->
         <script src="${pageContext.request.contextPath}/View/assets/vendor/tilt/tilt.jquery.min.js?version=1"></script>
+        <!--===============================================================================================-->
+        <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        
+        <c:set var="UserId" value="${cookie.loginId.value}"></c:set>
+        <%@include file="PageHeader.jsp" %>
+        <div id="Content">
+            <c:import url="<%=Content%>"></c:import>
+         </div>
+        <%@include file="PageFooter.jsp" %>
+        
         <script>
             console.log("${UserId}");
             console.log("${UserId.substring(0,2)=='AD'}");

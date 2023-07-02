@@ -5,16 +5,19 @@
 package controller;
 
 import dal.CategoryDAO;
+import entity.Category;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,6 +40,7 @@ public class CategoryUpdate extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         CategoryDAO DAO = new CategoryDAO();
 
         String CategoryID = request.getParameter("CategoryId");
@@ -50,9 +54,11 @@ public class CategoryUpdate extends HttpServlet {
             String path = Paths.get(getServletContext().getRealPath("")).getParent().getParent().toString()
                     + File.separator + "web"
                     + File.separator + "Database"
-                    + File.separator + "IMG";
+                    + File.separator + "IMG"
+                    + File.separator + "Categories";
             String StorePath = "Database"
                     + File.separator + "IMG"
+                    + File.separator + "Categories"
                     + File.separator + filePart.getSubmittedFileName();
 
             if (UpdateFile(filePart, path, OldImgpath)) {
@@ -71,7 +77,9 @@ public class CategoryUpdate extends HttpServlet {
                 Mess = "Update Fail Old path";
             }
         }
-
+        
+        ArrayList<Category> CatList = DAO.getCategories();
+        session.setAttribute("CatList", CatList);
         request.setAttribute("Mess", Mess);
         response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
     }

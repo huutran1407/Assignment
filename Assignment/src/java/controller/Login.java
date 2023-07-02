@@ -9,6 +9,7 @@ import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -82,8 +83,10 @@ public class Login extends HttpServlet {
         request.setAttribute("Mess", LoginMess);
         if (LoginMess.equals("Success")) {
             String UserId = users.getUserId(u);
-            session.setAttribute("UserId", UserId);
-            request.getRequestDispatcher("/View/Home.jsp").forward(request, response);
+            Cookie Account = new Cookie("loginId", UserId);
+            Account.setMaxAge(60 * 30);
+            response.addCookie(Account);
+            response.sendRedirect("View/Home.jsp");
         } else {
             request.getRequestDispatcher("/View/LoginPage.jsp").forward(request, response);
         }

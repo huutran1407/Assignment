@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author VHC
@@ -12,13 +14,14 @@ public class Products {
     private String ProId;
     private String Pro_Name;
     private int Pro_Quantity;
-    private int Pro_Type;
+    private String Pro_Type;
     private String Pro_Seller;
     private String Pro_img;
     private String Pro_des;
     private double Pro_Price;
+    private Date addDate;
 
-    public Products(String ProId, String Pro_Name, int Pro_Quantity, int Pro_Type, String Pro_Seller, String Pro_img, String Pro_des, double Pro_Price) {
+    public Products(String ProId, String Pro_Name, int Pro_Quantity, String Pro_Type, String Pro_Seller, String Pro_img, String Pro_des, double Pro_Price,Date addDate) {
         this.ProId = ProId;
         this.Pro_Name = Pro_Name;
         this.Pro_Quantity = Pro_Quantity;
@@ -27,6 +30,7 @@ public class Products {
         this.Pro_img = Pro_img;
         this.Pro_des = Pro_des;
         this.Pro_Price = Pro_Price;
+        this.addDate = addDate;
     }
 
     public Products() {
@@ -56,11 +60,11 @@ public class Products {
         this.Pro_Quantity = Pro_Quantity;
     }
 
-    public int getPro_Type() {
+    public String getPro_Type() {
         return Pro_Type;
     }
 
-    public void setPro_Type(int Pro_Type) {
+    public void setPro_Type(String Pro_Type) {
         this.Pro_Type = Pro_Type;
     }
 
@@ -94,6 +98,14 @@ public class Products {
 
     public void setPro_Price(double Pro_Price) {
         this.Pro_Price = Pro_Price;
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
     }
     
     

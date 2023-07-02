@@ -31,9 +31,11 @@ public class UsersDAO  {
                 s.setPassword(rs.getString("Password"));
                 s.setUserFullName(rs.getNString("User_FullName"));
                 s.setIsAdmin(rs.getInt("isAdmin")==1);
+                s.setIsBanned(rs.getInt("Banned")==1);
                 s.setEmail(rs.getString("Email"));
                 s.setContact(rs.getString("Contact"));
                 s.setDisplayName(rs.getNString("DisplayName"));
+                s.setJoinDate(rs.getDate("joinDate"));
                 students.add(s);
             }
         } catch (Exception ex) {
@@ -71,9 +73,9 @@ public class UsersDAO  {
             return "Username Existed";
         }else{
             String sql ="INSERT INTO Users\n"
-                    + "(UserId,Email,UserName,DisplayName,Password,isAdmin)\n"
+                    + "(UserId,Email,UserName,DisplayName,Password)\n"
                     + "values\n"
-                    + "(?,?,?,?,?,?)";
+                    + "(?,?,?,?,?)";
             try{
             PreparedStatement statment = conn.getConnection().prepareStatement(sql);
             statment.setString(1,UserId);
@@ -81,7 +83,6 @@ public class UsersDAO  {
             statment.setString(3,UserName);
             statment.setString(4,DisplayName);
             statment.setString(5,Password);
-            statment.setInt(6,0);
             statment.executeUpdate();
             }catch (Exception ex) {
                 Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,14 +156,16 @@ public class UsersDAO  {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Users s = new Users();
-                s.setUserId(rs.getString("UsersId"));
+                s.setUserId(rs.getString("UserId"));
                 s.setUserName(rs.getString("UserName"));
                 s.setPassword(rs.getString("Password"));
                 s.setUserFullName(rs.getNString("User_FullName"));
                 s.setIsAdmin(rs.getInt("isAdmin")==1);
+                s.setIsBanned(rs.getInt("Banned")==1);
                 s.setEmail(rs.getString("Email"));
                 s.setContact(rs.getString("Contact"));
                 s.setDisplayName(rs.getNString("DisplayName"));
+                s.setJoinDate(rs.getDate("joinDate"));
                 return s;
             }
         } catch (Exception ex) {
@@ -189,13 +192,12 @@ public class UsersDAO  {
          return "Fail";
     }
     
-    public void updateUser(String uName, String uFullName, String uPassword, boolean uIsAdmin, String uEmail, String uContact, String uDisplayName, String uId){
+    public void updateUser(String uName, String uFullName, String uPassword, String uEmail, String uContact, String uDisplayName, String uId){
         try {
             String sql = "UPDATE [Users]\n"
                     + "   SET [UserName] = ?\n"
                     + "      ,[User_FullName] = ?\n"
                     + "      ,[Password] = ?\n"
-                    + "      ,[isAdmin] = ?\n"
                     + "      ,[Email] = ?\n"
                     + "      ,[Contact] = ?\n"
                     + "      ,[DisplayName] = ?\n"
@@ -204,7 +206,6 @@ public class UsersDAO  {
             statement.setString(1, uName);
             statement.setString(2, uFullName);
             statement.setString(3, uPassword);
-            statement.setInt(4, uIsAdmin?1:0);
             statement.setString(5, uEmail);
             statement.setString(6, uContact);
             statement.setString(7, uDisplayName);

@@ -119,7 +119,7 @@ public class CategoryDAO  {
         try {
             DBContext conn2 = new DBContext();
             String sql = "DELETE FROM category\n"
-                    + "WHERE Category_Id=?";
+                    + "WHERE Category_Id LIKE ?";
             PreparedStatement statement = conn2.getConnection().prepareStatement(sql);
             statement.setString(1, id);
             statement.executeUpdate();

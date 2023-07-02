@@ -14,24 +14,54 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <%
-            CategoryDAO DAO = new CategoryDAO();
-            ArrayList<Category> obj = DAO.getCategories();
-            request.setAttribute("obj",obj);
-        %>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/HomeProductsCss.css?version=1">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/HomeProductsCss.css">
     </head>
     <body>
         <h1 class="text-center m-b-0 m-t-30 font-weight-normal" style="font-size: 20px;">DANH MỤC SẢN PHẨM</h1>
         <div class="Item_List w-75 m-r-auto m-l-auto m-t-18 m-b-28">
-            <div class="row justify-content-start p-t-30 p-b-30">
-                <c:forEach items="${obj}" var="o">
-                    <div class="Item col-md-2 m-t-10 m-b-10">
-                        <img class="SampleImg img-fluid bo-cir" src="${pageContext.request.contextPath}/${o.getCategory_Img()}" alt="alt"/>
+            <div class="ListItem dis-flex justify-content-center">
+                <c:forEach items="${sessionScope.CatList}" var="o">
+                    <div class="Item">
+                        <img class="SampleImg img-fluid bo-cir m-auto" src="${pageContext.request.contextPath}/${o.getCategory_Img()}" alt="alt"/>
                         <div class="Item-name">${o.getCategory()}</div>
                     </div>
                 </c:forEach>
             </div>
         </div>
+
+        <script>
+            $('.ListItem').slick({
+                slidesPerRow: 6,
+                rows: 2,
+                arrows: true,
+                infinite: false,
+                autoplay: false,
+                prevArrow: '<button class="slide-arrow prev-arrow"></button>',
+                nextArrow: '<button class="slide-arrow next-arrow"></button>',
+                responsive: [
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesPerRow: 1,
+                            rows: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesPerRow: 2,
+                            rows: 1
+                        }
+                    },
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesPerRow: 3,
+                            rows: 2
+                        }
+                    }
+                ]
+            });
+        </script>
     </body>
 </html>
