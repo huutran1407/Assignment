@@ -232,6 +232,21 @@ public class UsersDAO  {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    //change User Password
+    public void ChangePass(String uId, String Pass){
+        try {
+            String sql = "UPDATE [Users]\n"
+                    + "   SET [Password] = ?\n"
+                    + " WHERE [UserId] = ?";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, Pass);
+            statement.setString(2, uId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
     public void deleteUser(String id){
         try {

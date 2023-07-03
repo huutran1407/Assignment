@@ -19,14 +19,18 @@ public class Test {
         UsersDAO test = new UsersDAO();
         CategoryDAO CategoryTest = new CategoryDAO();
 //        System.out.println(test.SignInUser("abc", "Test", "Test1", "123"));
-//        test.deleteUser("CA000");
+        test.deleteUser("US001");
+        test.deleteUser("US002");
+        test.deleteUser("US003");
+        test.deleteUser("US004");
+        test.deleteUser("US005");
 //        ArrayList<Category> obj = CategoryTest.getCategories();
 //        String name = obj.get(0).getCategory();
 //        System.out.println(name);
 //        String fileName = "text.text.txt";
 //        fileName = fileName.substring(0, fileName.lastIndexOf(".")) + "2" + fileName.substring(fileName.lastIndexOf("."));
 //        System.out.println(fileName);
-        CategoryTest.deleteById("CA002");
+//        CategoryTest.deleteById("CA002");
 //        CategoryTest.deleteById("CA004");
 //        CategoryTest.deleteById("CA005");
     }

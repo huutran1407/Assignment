@@ -68,7 +68,7 @@
                             </span>
                         </div>
 
-                        <div class="wrap-input100 validate-input" data-validate = "Password required">
+                        <div class="wrap-input100 validate-input" data-validate = "Password required (Password must not contain any spaces)">
                             <input class="input100 password" type="password" name="Password" placeholder="Password">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">

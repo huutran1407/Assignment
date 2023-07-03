@@ -65,7 +65,7 @@
                                     <div class="dropdown-menu" style="right: auto; left: auto;" role="menu">
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/profile">Change Profile</a>
                                         <a class="dropdown-item" role="presentation" href="#">Second Item</a>
-                                        <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                                        <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                                         <c:choose>
                                             <c:when test="${UserId.substring(0,2)=='AD'}">
                                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/View/Home.jsp?Content=CategoryList.jsp">Categories List</a>

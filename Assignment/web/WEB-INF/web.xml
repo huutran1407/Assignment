@@ -44,6 +44,10 @@
         <servlet-name>UpdateUserProfile</servlet-name>
         <servlet-class>controller.UpdateUserProfile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>changePass</servlet-name>
+        <servlet-class>controller.changePass</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>UpdateUserProfile</servlet-name>
         <url-pattern>/profileupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changePass</servlet-name>
+        <url-pattern>/changePass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

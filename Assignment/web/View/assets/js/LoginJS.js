@@ -38,6 +38,9 @@
                 return false;
             }
         }
+        else if($(input).attr('name')=='Re-Password'||$(input).attr('name')=='Password'){
+            if($(input).val().match(/\s/)!=null) return false;
+        }
         else if($(input).attr('name')=='Re-Password'){
             if($(input).val()!== $(password).val()) return false;
         }
