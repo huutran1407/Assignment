@@ -32,6 +32,18 @@
         <servlet-name>WebStart</servlet-name>
         <servlet-class>controller.WebStart</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>controller.UserProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AvatarUpload</servlet-name>
+        <servlet-class>controller.AvatarUpload</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUserProfile</servlet-name>
+        <servlet-class>controller.UpdateUserProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -63,6 +75,18 @@
     <servlet-mapping>
         <servlet-name>WebStart</servlet-name>
         <url-pattern>/start</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AvatarUpload</servlet-name>
+        <url-pattern>/avatar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUserProfile</servlet-name>
+        <url-pattern>/profileupdate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

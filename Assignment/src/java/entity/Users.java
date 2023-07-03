@@ -21,8 +21,9 @@ public class Users {
     private String contact;
     private String DisplayName;
     private Date joinDate;
+    private String Avatar;
 
-    public Users(String UserId, String UserName, String Password, String UserFullName, boolean isAdmin,boolean isBanned ,String Email, String contact, String DisplayName,Date joinDate) {
+    public Users(String UserId, String UserName, String Password, String UserFullName, boolean isAdmin,boolean isBanned ,String Email, String contact, String DisplayName,Date joinDate,String Avatar) {
         this.UserId = UserId;
         this.UserName = UserName;
         this.Password = Password;
@@ -33,6 +34,7 @@ public class Users {
         this.DisplayName = DisplayName;
         this.joinDate = joinDate;
         this.isBanned = isBanned;
+        this.Avatar = Avatar;
     }
 
     public Users() {
@@ -116,6 +118,14 @@ public class Users {
 
     public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
+    }
+
+    public String getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(String Avatar) {
+        this.Avatar = Avatar;
     }
     
     

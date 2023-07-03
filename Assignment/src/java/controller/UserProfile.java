@@ -14,13 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.apache.tomcat.jni.SSLContext;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author VHC
  */
-public class Login extends HttpServlet {
+public class UserProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +35,21 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+         //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
         }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        UsersDAO DAO = new UsersDAO();
+        Users u = DAO.getUsersByID(UserID.getValue());
+        request.setAttribute("User", u);
+
+        request.getRequestDispatcher("/View/Home.jsp?Content=UserProfile.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,22 +78,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String u = request.getParameter("email/user").trim();
-        String p = request.getParameter("pass").trim();
-
-        UsersDAO users = new UsersDAO();
-        String LoginMess = users.checkLogin(u, p);
-        request.setAttribute("Mess", LoginMess);
-        if (LoginMess.equals("Success")) {
-            String UserId = users.getUserId(u);
-            Cookie Account = new Cookie("loginId", UserId);
-            Account.setMaxAge(60 * 60 * 24 * 365 * 10);//set cookie age to 10 years
-            response.addCookie(Account);
-            response.sendRedirect("View/Home.jsp");
-        } else {
-            request.getRequestDispatcher("/View/LoginPage.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

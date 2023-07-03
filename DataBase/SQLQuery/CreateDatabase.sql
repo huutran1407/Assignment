@@ -20,7 +20,8 @@ create table Users(
 	Contact varchar(255),
 	DisplayName nvarchar(255),
 	Banned int DEFAULT 0,
-	joinDate datetime DEFAULT CURRENT_TIMESTAMP
+	joinDate datetime DEFAULT CURRENT_TIMESTAMP,
+	User_Avatar varchar(255)
 
 	Primary key (UserId),
 )

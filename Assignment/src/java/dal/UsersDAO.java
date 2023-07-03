@@ -36,6 +36,7 @@ public class UsersDAO  {
                 s.setContact(rs.getString("Contact"));
                 s.setDisplayName(rs.getNString("DisplayName"));
                 s.setJoinDate(rs.getDate("joinDate"));
+                s.setAvatar(rs.getString("User_Avatar"));
                 students.add(s);
             }
         } catch (Exception ex) {
@@ -166,6 +167,7 @@ public class UsersDAO  {
                 s.setContact(rs.getString("Contact"));
                 s.setDisplayName(rs.getNString("DisplayName"));
                 s.setJoinDate(rs.getDate("joinDate"));
+                s.setAvatar(rs.getString("User_Avatar"));
                 return s;
             }
         } catch (Exception ex) {
@@ -192,12 +194,28 @@ public class UsersDAO  {
          return "Fail";
     }
     
-    public void updateUser(String uName, String uFullName, String uPassword, String uEmail, String uContact, String uDisplayName, String uId){
+    public boolean updateUserAvatar(String uId, String ImgPath){
+        try {
+            String sql = "UPDATE [Users]\n"
+                    + "   SET [User_Avatar] = ?\n"
+                    + " WHERE [UserId] = ?";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, ImgPath);
+            statement.setString(2, uId);
+            statement.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //update user profile
+    public void updateUser(String uName, String uFullName, String uEmail, String uContact, String uDisplayName, String uId){
         try {
             String sql = "UPDATE [Users]\n"
                     + "   SET [UserName] = ?\n"
                     + "      ,[User_FullName] = ?\n"
-                    + "      ,[Password] = ?\n"
                     + "      ,[Email] = ?\n"
                     + "      ,[Contact] = ?\n"
                     + "      ,[DisplayName] = ?\n"
@@ -205,11 +223,10 @@ public class UsersDAO  {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, uName);
             statement.setString(2, uFullName);
-            statement.setString(3, uPassword);
-            statement.setString(5, uEmail);
-            statement.setString(6, uContact);
-            statement.setString(7, uDisplayName);
-            statement.setString(8, uId);
+            statement.setString(3, uEmail);
+            statement.setString(4, uContact);
+            statement.setString(5, uDisplayName);
+            statement.setString(6, uId);
             statement.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -59,14 +59,10 @@ public class CategoryUpdate extends HttpServlet {
             String StorePath = "Database"
                     + File.separator + "IMG"
                     + File.separator + "Categories"
-                    + File.separator + filePart.getSubmittedFileName();
+                    + File.separator + filePart.getSubmittedFileName(); 
 
-            if (UpdateFile(filePart, path, OldImgpath)) {
-                if (DAO.updateCategory(CategoryID, name, StorePath)) {
-                    Mess = "Update Success";
-                } else {
-                    Mess = "Update Fail";
-                }
+            if (UpdateFile(filePart, path, OldImgpath,CategoryID, name, StorePath)) {
+                Mess = "Update Success";
             }else{
                 Mess ="Delete and Create File fails";
             }
@@ -84,8 +80,7 @@ public class CategoryUpdate extends HttpServlet {
         response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
     }
 
-    private boolean UpdateFile(Part part, String uploadPath, String OldPath) {
-        boolean test = false;
+    private boolean UpdateFile(Part part, String uploadPath, String OldPath,String CategoryID, String name, String StorePath) {
         try {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -100,14 +95,14 @@ public class CategoryUpdate extends HttpServlet {
             File f = new File(uploadPath + File.separator + fileName);
             if (f.exists() && !f.isDirectory()) {
                 fileName = fileName.substring(0, fileName.lastIndexOf(".")) + "2" + fileName.substring(fileName.lastIndexOf("."));
+                StorePath = StorePath.substring(0, StorePath.lastIndexOf(".")) + "2" + StorePath.substring(StorePath.lastIndexOf("."));
             }
             part.write(uploadPath + File.separator + fileName);
-            test = true;
-        } catch (Exception e) {
-            e.printStackTrace();
+            CategoryDAO DAO = new CategoryDAO();
+            return DAO.updateCategory(CategoryID, name, StorePath);
+        } catch (IOException e) {
         }
-
-        return test;
+        return false;
     }
 
     private boolean DelFile(String FilePath) {
