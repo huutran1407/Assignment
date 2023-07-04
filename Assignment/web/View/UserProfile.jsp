@@ -70,6 +70,15 @@
                                     <label class="small mb-1" for="inputPhonenumber">Phone number</label>
                                     <input name="Phonenumber" class="form-control" id="inputPhonenumber" type="text" placeholder="Enter your phone number" value="${u.getContact()}"/>
                                 </div>
+                                <div class="mb-3 text-left">
+                                    <label class="small mb-1" for="inputPhonenumber">Credit Card</label>
+                                    <div class="d-flex justify-content-start">
+                                        <i class="fa fa-2x fa-credit-card"></i>    
+                                        <div class="m-l-5" Id="BankNumber" style="width: 150px"></div>
+                                        <p class="m-l-10" Id="HideShow" onclick="HideShow()" style="cursor: pointer"></p>
+                                    </div>
+                                    <a class="" href="${pageContext.request.contextPath}/View/Home.jsp?Content=AddPayment.jsp" style="text-decoration: none">Link Credit Card</a>
+                                </div>
                                 <!-- Save changes button-->
                                 <button class="btn btn-primary m-auto" type="submit">Save changes</button>
                             </form>
@@ -78,5 +87,26 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            var Number = document.getElementById("BankNumber");
+            let hide = document.getElementById("HideShow");
+            const Num = '${requestScope.Card.getCardNumber()==null?'Unlinked Card':requestScope.Card.getCardNumber()}';
+            hide.innerHTML = 'Show';
+            Number.innerHTML = "****************";
+            console.log(Number.innerHTML);
+            
+            
+            function HideShow() {
+                if (hide.innerHTML === 'Show') {
+                    Number.innerHTML = Num;
+                    hide.innerHTML = 'Hide';
+                } else {
+                    Number.innerHTML = "****************";
+                    hide.innerHTML = 'Show';
+                }
+
+            }
+        </script>
     </body>
 </html>

@@ -95,3 +95,15 @@ create table UserCart(
 	FOREIGN KEY (UserId) REFERENCES Users(UserId),
 	FOREIGN KEY (Pro_Id) REFERENCES Product(Pro_Id)
 )
+
+create table PaymentCard(
+	UserId varchar(255),
+	CardOwner nvarchar(255) NOT NULL,
+	CardNumber varchar(255) NOT NULL,
+	CardExpMonth int,
+	CardExpYear int,
+	CVC varchar(3)
+
+	PRIMARY KEY (UserId),
+	FOREIGN KEY (UserId) REFERENCES Users(UserId)
+)

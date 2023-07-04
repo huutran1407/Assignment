@@ -62,9 +62,8 @@
                             <div class="flex-m">
                                 <span class="navbar-text"> 
                                     <a href="#" class="login fa fa-user dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-size: 30px; margin-right: 20px"></a>
-                                    <div class="dropdown-menu" style="right: auto; left: auto;" role="menu">
+                                    <div class="dropdown-menu" style="left: auto; right: 50px;" role="menu">
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/profile">Change Profile</a>
-                                        <a class="dropdown-item" role="presentation" href="#">Second Item</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                                         <c:choose>
                                             <c:when test="${UserId.substring(0,2)=='AD'}">

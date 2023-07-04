@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/ChangePassStyle.css"/>
     </head>
     <body style="background-color: #f2f6fc; color: #69707a;">
-        <div class="dis-flex justify-content-center m-b-50">
+        <div class="dis-flex justify-content-center m-b-50 p-b-60">
             <div class="col-md-6 offset-md-3">
                 <span class="anchor" id="formChangePassword"></span>
                 <hr class="mb-5">
