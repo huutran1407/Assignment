@@ -1,0 +1,105 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 5, 2023, 11:13:01 PM
+    Author     : VHC
+*/
+body{
+    font-family: Helvetica,Arial,Roboto,sans-serif;
+    background-color:#f2f6fc;
+    color:#69707a;
+}
+
+.card-body_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 0;
+    text-align: center;
+}
+
+.card-body_content svg{
+    width: 420px;
+    height: 172.5px;
+
+}
+
+.card-body_content h1{
+    font-size: 16px;
+    margin: 12px 0;
+    color: #222;
+    padding: 0 36px;
+}
+
+.AddButt{
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 400;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #047cff;
+    border-color: #047cff;
+    font-size: 1rem;
+    line-height: 1.25;
+    padding: 9px 19px;
+    text-decoration: none !important;
+    color: #fff !important;
+}
+
+item{
+    position: relative;
+    cursor: pointer;
+}
+
+.item{
+    display: flex;
+    padding: 12px;
+    border-color: #e8e8e8;
+    gap: 12px;
+    border-width: 1px 1px 1px 0;
+    margin-bottom: -1px;
+    border: #f4f4f4 solid;
+}
+
+.item_img{
+    position: relative;
+    cursor: pointer;
+}
+
+.item_img>img {
+    width: 108px;
+    height: 108px;
+    border-radius: 2px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.item_detail-name{
+    font-size: 16px;
+    color: #222;
+}
+
+.item_detail-price{
+    font-weight: 700;
+}
+
+@media (min-width: 768px){
+    .item {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .item_img>img {
+        width: 183px;
+        height: 183px;
+        aspect-ratio: 1/1;
+    }
+
+    .item_img>span {
+        display: inline;
+    }
+}

@@ -4,6 +4,10 @@
  */
 package entity;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -11,6 +15,7 @@ import java.util.Date;
  * @author VHC
  */
 public class Products {
+
     private String ProId;
     private String Pro_Name;
     private int Pro_Quantity;
@@ -21,7 +26,7 @@ public class Products {
     private double Pro_Price;
     private Date addDate;
 
-    public Products(String ProId, String Pro_Name, int Pro_Quantity, String Pro_Type, String Pro_Seller, String Pro_img, String Pro_des, double Pro_Price,Date addDate) {
+    public Products(String ProId, String Pro_Name, int Pro_Quantity, String Pro_Type, String Pro_Seller, String Pro_img, String Pro_des, double Pro_Price, Date addDate) {
         this.ProId = ProId;
         this.Pro_Name = Pro_Name;
         this.Pro_Quantity = Pro_Quantity;
@@ -92,8 +97,8 @@ public class Products {
         this.Pro_des = Pro_des;
     }
 
-    public double getPro_Price() {
-        return Pro_Price;
+    public String getPro_Price() {
+        return String.format("%,.0f vnd", Pro_Price*1000);
     }
 
     public void setPro_Price(double Pro_Price) {
@@ -107,6 +112,26 @@ public class Products {
     public void setAddDate(Date addDate) {
         this.addDate = addDate;
     }
-    
-    
+
+    public String getDateDiff() {
+        //get current date
+        Date date2 = new Date();
+        // Get period between the first and the second date   
+        Period difference = Period.between(convertToLocalDateViaInstant(getAddDate()), convertToLocalDateViaInstant(date2));
+        
+        String Year = difference.getYears()==0?"":(""+difference.getYears() + " Years ");
+        String Months = difference.getMonths()==0?"":(""+difference.getMonths() + " Months ");
+        String Days = difference.getDays()==0?"":(""+difference.getDays() + " Days ");
+        if(difference.getYears()==0&&difference.getMonths()==0&&difference.getDays()==0){
+            return "today";
+        }
+        
+        return Year + Months + Days + "ago";
+    }
+
+    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
 }

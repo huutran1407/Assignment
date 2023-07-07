@@ -1,0 +1,202 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 6, 2023, 3:48:46 AM
+    Author     : VHC
+*/
+
+.Product-img{
+    height: 225px;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    border: 2px dotted #fe9900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+    padding-top: 0;
+}
+
+.output{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.Product-img_icon{
+    position: relative;
+    padding: 3px 0;
+    cursor: pointer;
+}
+.Product-img_icon>span{
+    position: absolute;
+    margin-top: -14px;
+    margin-left: -4px;
+}
+
+.Product-img_text{
+    padding: 3px 0;
+    text-align: center;
+    color: #8c8c8c;
+    font-size: .625rem;
+    font-weight: 700
+}
+
+.Product-img_text>p{
+    text-align: center;
+    color: #8c8c8c;
+    font-size: .625rem;
+    font-weight: 700
+}
+
+.category-selection{
+    background: #fff;
+    border-color: #cacaca;
+    width: 100%;
+    height: 48px;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid silver;
+    background-color: #fff;
+    appearance: none;
+}
+
+.category-selection>label{
+    position: absolute;
+    top: 13px;
+    left: 12px;
+    cursor: text;
+    pointer-events: none;
+    transform-origin: top left;
+    transition: transform .1s ease;
+    color: #8c8c8c;
+    font-size: .875rem;
+    transform: scale(.7143) translateY(-10px);
+    font-weight: 700;
+    z-index: 1;
+}
+
+.category-selection>select{
+    width: 100%;
+    height: 100%;
+    font-size: .875rem;
+    color: #222;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    padding: 14px 12px 0;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.category-selection>select:focus{
+    border: none;
+    outline:none;
+}
+
+.category-selection>svg{
+    height: 48px;
+    position: absolute;
+    top: -1px;
+    right: 12px;
+    color: #8c8c8c;
+    pointer-events: none;
+}
+
+.Product-input{
+    width: 100%;
+    height: 48px;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid silver;
+    background-color: #fff;
+    margin: 10px auto;
+}
+
+.Product-input>input:focus+label,.Product-input>textarea:focus+label,.hasValue+label{
+    transform: scale(.7143) translateY(-10px);
+    font-weight: 700;
+}
+
+.Product-input>label{
+    position: absolute;
+    top: 13px;
+    left: 12px;
+    cursor: text;
+    pointer-events: none;
+    transform-origin: top left;
+    transition: transform .1s ease;
+    color: #8c8c8c;
+    font-size: .875rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - 12px);
+}
+
+.Product-input>input{
+    width: 100%;
+    height: 100%;
+    font-size: .875rem;
+    color: #222;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    padding: 14px 12px 0;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.Product-input>textarea{
+    border-radius: 4px;
+    width: 100%;
+    padding: 0 12px 4px;
+    outline: none;
+    border: none;
+    line-height: 20px;
+    height: calc(100% - 30px);
+    resize: none;
+    background-color: #fff;
+}
+
+.focus-capture {
+    cursor: text;
+    height: 30px;
+}
+
+.Description{
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid silver;
+    height: 135px;
+    min-height: 48px;
+    background-color: #fff;
+}
+
+.Details-titles{
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.money{
+    position: absolute;
+    top: 20px;
+    right: 12px;
+    color: #8c8c8c;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

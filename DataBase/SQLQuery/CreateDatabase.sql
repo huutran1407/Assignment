@@ -35,7 +35,8 @@ create table Product(
 	Pro_img text,
 	Pro_description ntext,
 	Pro_Price float,
-	Pro_AddDate datetime DEFAULT CURRENT_TIMESTAMP
+	Pro_AddDate datetime DEFAULT CURRENT_TIMESTAMP,
+	Pro_Status int DEFAULT 1
 
 	Primary key (Pro_Id),
 	FOREIGN KEY (Pro_Type) REFERENCES category(Category_Id),

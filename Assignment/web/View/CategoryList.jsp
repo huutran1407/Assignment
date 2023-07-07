@@ -56,9 +56,21 @@
             </div>
         </div>
 
-        <script src="${pageContext.request.contextPath}/View/assets/js/loadFile.js"></script>
         <script src="${pageContext.request.contextPath}/View/assets/js/ConfirmBoxScript.js"></script>
         <script>
+
+                                    var loadFile = function (event) {
+                                        var reader = new FileReader();
+                                        reader.onload = function () {
+                                            var output = document.querySelector('.output');
+                                            var icon = document.querySelector('.imgInp_icon');
+                                            icon.style.display = "none";
+                                            output.style.display = "block";
+                                            output.src = reader.result;
+                                        };
+                                        reader.readAsDataURL(event.target.files[0]);
+                                    };
+
                                     let box = document.querySelector('.card');
                                     let width = box.offsetWidth;
                                     let height = box.offsetHeight;

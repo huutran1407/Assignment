@@ -15,23 +15,24 @@ import entity.Users;
  *
  * @author fsoft
  */
-public class UsersDAO  {
+public class UsersDAO {
+
     DBContext conn = new DBContext();
+
     public ArrayList<Users> getUsers() {
         ArrayList<Users> students = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Users]";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Users s = new Users();
                 s.setUserId(rs.getString("UserId"));
                 s.setUserName(rs.getString("UserName"));
                 s.setPassword(rs.getString("Password"));
                 s.setUserFullName(rs.getNString("User_FullName"));
-                s.setIsAdmin(rs.getInt("isAdmin")==1);
-                s.setIsBanned(rs.getInt("Banned")==1);
+                s.setIsAdmin(rs.getInt("isAdmin") == 1);
+                s.setIsBanned(rs.getInt("Banned") == 1);
                 s.setEmail(rs.getString("Email"));
                 s.setContact(rs.getString("Contact"));
                 s.setDisplayName(rs.getNString("DisplayName"));
@@ -44,17 +45,17 @@ public class UsersDAO  {
         }
         return students;
     }
-    
-    public String checkLogin(String User,String Password){
+
+    public String checkLogin(String User, String Password) {
         String sql = "SELECT * FROM Users s\n"
-                    + "WHERE s.Email = ? OR s.UserName = ?";
-         try {
+                + "WHERE s.Email = ? OR s.UserName = ?";
+        try {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, User);
             statement.setString(2, User);
             ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                if(Password.equals(rs.getString("Password"))){
+            if (rs.next()) {
+                if (Password.equals(rs.getString("Password"))) {
                     return "Success";
                 }
                 return "Incorrect Password";
@@ -62,93 +63,93 @@ public class UsersDAO  {
         } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return "Email or Username not existed";
+        return "Email or Username not existed";
     }
-    
+
     //funtion to SignIn User Account
-    public String SignInUser(String Email, String UserName, String DisplayName, String Password){
+    public String SignInUser(String Email, String UserName, String DisplayName, String Password) {
         String UserId = getNewUserId();
-        if(isExistEmail(Email)){
+        if (isExistEmail(Email)) {
             return "Email Existed";
-        }else if(isExistUsername(UserName)){
+        } else if (isExistUsername(UserName)) {
             return "Username Existed";
-        }else{
-            String sql ="INSERT INTO Users\n"
+        } else {
+            String sql = "INSERT INTO Users\n"
                     + "(UserId,Email,UserName,DisplayName,Password)\n"
                     + "values\n"
                     + "(?,?,?,?,?)";
-            try{
-            PreparedStatement statment = conn.getConnection().prepareStatement(sql);
-            statment.setString(1,UserId);
-            statment.setString(2,Email);
-            statment.setString(3,UserName);
-            statment.setString(4,DisplayName);
-            statment.setString(5,Password);
-            statment.executeUpdate();
-            }catch (Exception ex) {
+            try {
+                PreparedStatement statment = conn.getConnection().prepareStatement(sql);
+                statment.setString(1, UserId);
+                statment.setString(2, Email);
+                statment.setString(3, UserName);
+                statment.setString(4, DisplayName);
+                statment.setString(5, Password);
+                statment.executeUpdate();
+            } catch (Exception ex) {
                 Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
         return "Success";
     }
-    
+
     //check if the Username is existed
-    public boolean isExistUsername(String Username){
+    public boolean isExistUsername(String Username) {
         String sql = "Select * From Users\n"
                 + "where UserName LIKE ?";
-        try{
+        try {
             PreparedStatement statment = conn.getConnection().prepareStatement(sql);
-            statment.setString(1,Username);
+            statment.setString(1, Username);
             ResultSet rs = statment.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
+
     //funtion to check Exist Email
-    public boolean isExistEmail(String Email){
+    public boolean isExistEmail(String Email) {
         String sql = "Select * From Users\n"
                 + "where Email LIKE ?";
-        try{
+        try {
             PreparedStatement statment = conn.getConnection().prepareStatement(sql);
-            statment.setString(1,Email);
+            statment.setString(1, Email);
             ResultSet rs = statment.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
+
     //funtion to get ID for new User
-    public String getNewUserId(){
+    public String getNewUserId() {
         String getId = "SELECT max(UserId) as ID FROM Users Where UserId not like 'AD%'";
-        try{
+        try {
             PreparedStatement ID = conn.getConnection().prepareStatement(getId);
             ResultSet IDrs = ID.executeQuery();
-             if(IDrs.next()){
-                try{
+            if (IDrs.next()) {
+                try {
                     String IDNUM = IDrs.getString("ID").substring(2);
-                    int NUM = Integer.parseInt(IDNUM)+1;
-                    return "US" + String.format("%03d",NUM);
-                }catch(NullPointerException ex){
+                    int NUM = Integer.parseInt(IDNUM) + 1;
+                    return "US" + String.format("%03d", NUM);
+                } catch (NullPointerException ex) {
                     return "US001";
                 }
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "Fail";
     }
-    
+
     //getUsersByID
-    public Users getUsersByID(String id){
+    public Users getUsersByID(String id) {
         try {
             String sql = "SELECT * FROM Users s\n"
                     + "WHERE s.UserId = ?";
@@ -161,8 +162,8 @@ public class UsersDAO  {
                 s.setUserName(rs.getString("UserName"));
                 s.setPassword(rs.getString("Password"));
                 s.setUserFullName(rs.getNString("User_FullName"));
-                s.setIsAdmin(rs.getInt("isAdmin")==1);
-                s.setIsBanned(rs.getInt("Banned")==1);
+                s.setIsAdmin(rs.getInt("isAdmin") == 1);
+                s.setIsBanned(rs.getInt("Banned") == 1);
                 s.setEmail(rs.getString("Email"));
                 s.setContact(rs.getString("Contact"));
                 s.setDisplayName(rs.getNString("DisplayName"));
@@ -175,26 +176,26 @@ public class UsersDAO  {
         }
         return null;
     }
-    
+
     //get UserID
-    public String getUserId(String User){
+    public String getUserId(String User) {
         String sql = "SELECT UserId FROM Users s\n"
-                    + "WHERE s.Email = ? OR s.UserName = ?";
-         try {
+                + "WHERE s.Email = ? OR s.UserName = ?";
+        try {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, User);
             statement.setString(2, User);
             ResultSet rs = statement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getString("UserId");
-             }
+            }
         } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return "Fail";
+        return "Fail";
     }
-    
-    public boolean updateUserAvatar(String uId, String ImgPath){
+
+    public boolean updateUserAvatar(String uId, String ImgPath) {
         try {
             String sql = "UPDATE [Users]\n"
                     + "   SET [User_Avatar] = ?\n"
@@ -209,9 +210,9 @@ public class UsersDAO  {
         }
         return false;
     }
-    
+
     //update user profile
-    public void updateUser(String uName, String uFullName, String uEmail, String uContact, String uDisplayName, String uId){
+    public void updateUser(String uName, String uFullName, String uEmail, String uContact, String uDisplayName, String uId) {
         try {
             String sql = "UPDATE [Users]\n"
                     + "   SET [UserName] = ?\n"
@@ -232,9 +233,9 @@ public class UsersDAO  {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     //change User Password
-    public void ChangePass(String uId, String Pass){
+    public void ChangePass(String uId, String Pass) {
         try {
             String sql = "UPDATE [Users]\n"
                     + "   SET [Password] = ?\n"
@@ -248,7 +249,80 @@ public class UsersDAO  {
         }
     }
 
-    public void deleteUser(String id){
+    //get average Rating
+    public float getUserRating(String User) {
+        String sql = "SELECT ISNULL(AVG(Rate.Rate),0) as avg\n"
+                + "FROM Rate join Product on Rate.ProductId = Product.Pro_Id\n"
+                + "WHERE Product.Pro_Seller LIKE ?;";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, User);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getFloat("avg");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    //get total number of rating
+    public int getUserNumberRating(String User) {
+        String sql = "SELECT ISNULL(COUNT(Rate.Rate),0) as count\n"
+                + "FROM Rate join Product on Rate.ProductId = Product.Pro_Id\n"
+                + "WHERE Product.Pro_Seller LIKE ?;";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, User);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    //get number of follower
+    public int getNumberFollower(String User){
+        String sql = "SELECT ISNULL(COUNT(FollowedId),0) as count\n"
+                + "FROM Follow\n"
+                + "WHERE FollowedId LIKE ?;";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, User);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    //get number of following
+    public int getNumberFollowing(String User){
+        String sql = "SELECT ISNULL(COUNT(UserId),0) as count\n"
+                + "FROM Follow\n"
+                + "WHERE UserId LIKE ?;";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, User);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    
+    public void deleteUser(String id) {
         try {
             DBContext conn2 = new DBContext();
             String sql = "DELETE FROM Users\n"
@@ -262,4 +336,3 @@ public class UsersDAO  {
     }
 
 }
-

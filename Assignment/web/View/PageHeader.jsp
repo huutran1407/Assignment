@@ -31,7 +31,7 @@
                          id="navcol-1">
                         <ul class="nav navbar-nav">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="#">Link</a>
+                                <a class="nav-link active" href="${pageContext.request.contextPath}/View/Home.jsp?Content=AddProduct.jsp">Sell Product</a>
                             </li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
@@ -63,6 +63,7 @@
                                 <span class="navbar-text"> 
                                     <a href="#" class="login fa fa-user dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-size: 30px; margin-right: 20px"></a>
                                     <div class="dropdown-menu" style="left: auto; right: 50px;" role="menu">
+                                        <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/ppage">User Page</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/profile">Change Profile</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                                         <c:choose>
