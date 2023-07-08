@@ -71,7 +71,7 @@ create table Rate(
 	UserId varchar(255) NOT NULL,
 	ProductId varchar(255) NOT NULL,
 	Rate float,
-	RateMess text
+	RateMess ntext
 	
 	PRIMARY KEY (UserId,ProductId),
 	FOREIGN KEY (ProductId) REFERENCES Product(Pro_Id),

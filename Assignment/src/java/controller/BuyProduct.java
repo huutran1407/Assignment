@@ -1,28 +1,31 @@
+package controller;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
 
-import dal.CategoryDAO;
-import dal.UsersDAO;
-import entity.Category;
-import entity.Users;
+import dal.OrderDAO;
+import dal.ProductDAO;
+import entity.OrderItems;
+import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author VHC
  */
-public class WebStart extends HttpServlet {
+public class BuyProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +42,10 @@ public class WebStart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet WebStart</title>");  
+            out.println("<title>Servlet BuyProduct</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet WebStart at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet BuyProduct at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,8 +62,7 @@ public class WebStart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        response.sendRedirect("home");
+        processRequest(request, response);
     } 
 
     /** 
@@ -73,7 +75,40 @@ public class WebStart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String Quantity = request.getParameter("Quantity");
+        String ProId = request.getParameter("ProId");
+        String TotalPrice = request.getParameter("TotalPrice");
+        float OrderPrice = getPrice(TotalPrice);
+        String Payment = request.getParameter("PaymentMethod");
+        String CustomerName = request.getParameter("CustomberName");
+        String PhoneNumber = request.getParameter("PhoneNumber");
+        String Address = request.getParameter("Address");
+        
+        
+        //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
+        }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        ProductDAO pDAO = new ProductDAO();
+        OrderDAO oDAO = new OrderDAO();
+        Products p = pDAO.getProduct(ProId);
+        
+        OrderItems item = new OrderItems(ProId,Integer.parseInt(Quantity));
+        ArrayList<OrderItems> OrderItems = new ArrayList<>();
+        OrderItems.add(item);
+        
+        oDAO.insertOrder(UserID.getValue(), OrderPrice, Payment, CustomerName, PhoneNumber, Address, OrderItems);
+        
+        response.sendRedirect("pdetail?PID="+ProId);
+    }
+    
+    public float getPrice(String Price){
+        return Float.parseFloat(Price.substring(0, Price.length()-3).replaceAll(",", ""))/1000;
     }
 
     /** 

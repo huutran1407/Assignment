@@ -48,25 +48,18 @@ public class PersonalPage extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-         //get cookies
-        Cookie[] cookies = request.getCookies();
-        Map<String, Cookie> cookieMap = new HashMap<>();
-        for (Cookie cookie : cookies) {
-            cookieMap.put(cookie.getName(), cookie);
-        }
-        //get cookie by name
-        Cookie UserID = cookieMap.get("loginId");
+        String UserId = request.getParameter("UserId");
         
         ProductDAO pDAO = new ProductDAO();
         UsersDAO DAO = new UsersDAO();
         
-        ArrayList<Products> ProductList = pDAO.getUserProduct(UserID.getValue());
-        ArrayList<Products> SoldOut = pDAO.getUserSoldOutProduct(UserID.getValue());
-        Users u = DAO.getUsersByID(UserID.getValue());
-        float rating = DAO.getUserRating(UserID.getValue());
-        int numRate = DAO.getUserNumberRating(UserID.getValue());
-        int numFollower = DAO.getNumberFollower(UserID.getValue());
-        int numFollowing = DAO.getNumberFollowing(UserID.getValue());
+        ArrayList<Products> ProductList = pDAO.getUserProduct(UserId);
+        ArrayList<Products> SoldOut = pDAO.getUserSoldOutProduct(UserId);
+        Users u = DAO.getUsersByID(UserId);
+        float rating = DAO.getUserRating(UserId);
+        int numRate = DAO.getUserNumberRating(UserId);
+        int numFollower = DAO.getNumberFollower(UserId);
+        int numFollowing = DAO.getNumberFollowing(UserId);
         String JoinDateDiff = find(u.getJoinDate());
         
         request.setAttribute("JoinDateDiff", JoinDateDiff);

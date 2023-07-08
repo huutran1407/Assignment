@@ -5,24 +5,29 @@
 
 package controller;
 
-import dal.CategoryDAO;
+import dal.CreditcardDAO;
+import dal.ProductDAO;
 import dal.UsersDAO;
-import entity.Category;
+import entity.CreditCard;
+import entity.Products;
+import entity.Rating;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author VHC
  */
-public class WebStart extends HttpServlet {
+public class ProductDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,18 +39,34 @@ public class WebStart extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet WebStart</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet WebStart at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String ProId = request.getParameter("PID");
+        
+        UsersDAO uDAO = new UsersDAO();
+        ProductDAO pDAO = new ProductDAO();
+        CreditcardDAO cardDAO = new CreditcardDAO();
+        
+         //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
         }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        CreditCard card = cardDAO.getCardByID(UserID.getValue());
+        Products p = pDAO.getProduct(ProId);
+        Users s = uDAO.getUsersByID(p.getPro_Seller());
+        Users u = uDAO.getUsersByID(UserID.getValue());
+        ArrayList<Rating> RateList = pDAO.getProductRates(ProId);
+        
+        request.setAttribute("card", card);
+        request.setAttribute("RateList", RateList);
+        request.setAttribute("Seller", s);
+        request.setAttribute("User", u);
+        request.setAttribute("Product", p);
+        request.setAttribute("isRated", pDAO.isRated(UserID.getValue(), ProId));
+        request.getRequestDispatcher("/View/Home.jsp?Content=ProductPage.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,8 +80,7 @@ public class WebStart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        response.sendRedirect("home");
+        processRequest(request, response);
     } 
 
     /** 

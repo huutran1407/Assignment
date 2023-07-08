@@ -86,7 +86,7 @@ public class Login extends HttpServlet {
             Cookie Account = new Cookie("loginId", UserId);
             Account.setMaxAge(60 * 60 * 24 * 365 * 10);//set cookie age to 10 years
             response.addCookie(Account);
-            response.sendRedirect("View/Home.jsp");
+            response.sendRedirect("home");
         } else {
             request.getRequestDispatcher("/View/LoginPage.jsp").forward(request, response);
         }

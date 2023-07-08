@@ -4,6 +4,7 @@
  */
 package entity;
 
+import dal.ProductDAO;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
@@ -15,6 +16,7 @@ import java.util.Date;
  * @author VHC
  */
 public class Products {
+    ProductDAO pDAO = new ProductDAO();
 
     private String ProId;
     private String Pro_Name;
@@ -100,6 +102,10 @@ public class Products {
     public String getPro_Price() {
         return String.format("%,.0f vnd", Pro_Price*1000);
     }
+    
+    public double getPro_PriceNum(){
+        return Pro_Price;
+    }
 
     public void setPro_Price(double Pro_Price) {
         this.Pro_Price = Pro_Price;
@@ -133,5 +139,9 @@ public class Products {
         return Instant.ofEpochMilli(dateToConvert.getTime())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+    }
+    
+    public float getRate(){
+        return pDAO.getProductRating(ProId);
     }
 }

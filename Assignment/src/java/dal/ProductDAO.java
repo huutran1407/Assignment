@@ -11,21 +11,25 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.Products;
+import entity.Rating;
 
 /**
  *
  * @author fsoft
  */
-public class ProductDAO  {
+public class ProductDAO {
+
     DBContext conn = new DBContext();
-    public ArrayList<Products> getStudents() {
+
+    public ArrayList<Products> getProducts() {
         ArrayList<Products> products = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Product]";
+            String sql = "SELECT * FROM [Product]\n"
+                    + "Where Pro_Quantity != 0\n"
+                    + "ORDER BY Pro_AddDate DESC";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Products s = new Products();
                 s.setProId(rs.getString("Pro_Id"));
                 s.setPro_Name(rs.getString("Pro_Name"));
@@ -43,7 +47,8 @@ public class ProductDAO  {
         }
         return products;
     }
-    
+
+    //get product list of a User
     public ArrayList<Products> getUserProduct(String Owner) {
         ArrayList<Products> products = new ArrayList<>();
         try {
@@ -51,8 +56,7 @@ public class ProductDAO  {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, Owner);
             ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Products s = new Products();
                 s.setProId(rs.getString("Pro_Id"));
                 s.setPro_Name(rs.getString("Pro_Name"));
@@ -70,7 +74,8 @@ public class ProductDAO  {
         }
         return products;
     }
-    
+
+    //get SoldOut Product of a Seller
     public ArrayList<Products> getUserSoldOutProduct(String Owner) {
         ArrayList<Products> products = new ArrayList<>();
         try {
@@ -78,8 +83,7 @@ public class ProductDAO  {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, Owner);
             ResultSet rs = statement.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Products s = new Products();
                 s.setProId(rs.getString("Pro_Id"));
                 s.setPro_Name(rs.getString("Pro_Name"));
@@ -97,13 +101,14 @@ public class ProductDAO  {
         }
         return products;
     }
-    
-    public Products getProducts(int id) throws Exception {
+
+    //get Product by ID
+    public Products getProduct(String id) {
         try {
             String sql = "SELECT * FROM Product s\n"
-                    + "WHERE s.id = ?";
+                    + "WHERE s.Pro_Id = ?";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setString(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Products s = new Products();
@@ -119,19 +124,19 @@ public class ProductDAO  {
                 return s;
             }
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     //Add Product to database
-    public void insertProduct(String pName, int pQuantity, String pType, String pSeller, String pImg, String pDescription, float pPrice){
+    public void insertProduct(String pName, int pQuantity, String pType, String pSeller, String pImg, String pDescription, float pPrice) {
         try {
             String sql = "INSERT INTO Product\n"
-                             + "(Pro_Id,Pro_Name,Pro_Quantity,Pro_Type,Pro_Seller,Pro_img,Pro_description,Pro_Price)\n"
-                             + "values\n"
-                             + "(?,?,?,?,?,?,?,?)";
+                    + "(Pro_Id,Pro_Name,Pro_Quantity,Pro_Type,Pro_Seller,Pro_img,Pro_description,Pro_Price)\n"
+                    + "values\n"
+                    + "(?,?,?,?,?,?,?,?)";
             String pId = getNewProductId(pSeller, pType);
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, pId);
@@ -147,11 +152,11 @@ public class ProductDAO  {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public String getNewProductId(String pSeller,String pCategory){
+
+    public String getNewProductId(String pSeller, String pCategory) {
         String getId = "SELECT max(Pro_Id) as ID FROM Product\n"
-                                +"Where Pro_Seller LIKE ?\n"
-                                +"AND Pro_Type LIKE ?";
+                + "Where Pro_Seller LIKE ?\n"
+                + "AND Pro_Type LIKE ?";
         try {
             PreparedStatement ID = conn.getConnection().prepareStatement(getId);
             ID.setString(1, pSeller);
@@ -159,11 +164,11 @@ public class ProductDAO  {
             ResultSet IDrs = ID.executeQuery();
             if (IDrs.next()) {
                 try {
-                    String IDNUM = IDrs.getString("ID").substring(pSeller.length()+pCategory.length()+2);
+                    String IDNUM = IDrs.getString("ID").substring(pSeller.length() + pCategory.length() + 2);
                     int NUM = Integer.parseInt(IDNUM) + 1;
-                    return pSeller+pCategory+"PD" + String.format("%03d", NUM);
+                    return pSeller + pCategory + "PD" + String.format("%03d", NUM);
                 } catch (NullPointerException ex) {
-                    return pSeller+pCategory+"PD001";
+                    return pSeller + pCategory + "PD001";
                 }
             }
         } catch (Exception ex) {
@@ -172,33 +177,99 @@ public class ProductDAO  {
         return "Fail";
     }
 
-    public void updateProduct(String pName, int pQuantity, int pType, String pSeller, String pImg, String pDescription, double pPrice,String pId) throws Exception {
+    //get average Rating
+    public float getProductRating(String pId) {
+        String sql = "SELECT ISNULL(AVG(Rate.Rate),0) as avg\n"
+                + "FROM Rate join Product on Rate.ProductId = Product.Pro_Id\n"
+                + "WHERE Product.Pro_Id LIKE ?;";
         try {
-            String sql = "UPDATE [Product]\n"
-                    + "   SET [Pro_Name] = ?\n"
-                    + "      ,[Pro_Quantity] = ?\n"
-                    + "      ,[Pro_Type] = ?\n"
-                    + "      ,[Pro_Seller] = ?\n"
-                    + "      ,[Pro_img] = ?\n"
-                    + "      ,[Pro_description] = ?\n"
-                    + "      ,[Pro_Price] = ?\n"
-                    + " WHERE [Pro_id] = ?";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
-            statement.setString(1, pName);
-            statement.setInt(2, pQuantity);
-            statement.setInt(3, pType);
-            statement.setString(4, pSeller);
-            statement.setString(5, pImg);
-            statement.setString(6, pDescription);
-            statement.setDouble(7, pPrice);
-            statement.setString(8, pId);
+            statement.setString(1, pId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getFloat("avg");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    //get all product rating
+    public ArrayList<Rating> getProductRates(String ProId) {
+        ArrayList<Rating> RateList = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Rate] WHERE ProductId = ?";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, ProId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                UsersDAO uDAO = new UsersDAO();
+                Rating s = new Rating();
+                s.setUser(uDAO.getUsersByID(rs.getString("UserId")));
+                s.setProductId(rs.getString("ProductId"));
+                s.setRateMess(rs.getString("RateMess"));
+                s.setRate(rs.getFloat("Rate"));
+                RateList.add(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return RateList;
+    }
+
+    public void insertProductRate(String ProId, String UserId, float rate, String RateMess) {
+        try {
+            String sql = "INSERT INTO Rate\n"
+                    + "(UserId,ProductId,Rate,RateMess)\n"
+                    + "values\n"
+                    + "(?,?,?,?)";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, ProId);
+            statement.setFloat(3, rate);
+            statement.setString(4, RateMess);
             statement.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void deleteProduct(String id){
+    public void decsProductAmount(int Quantity, String Pro_ID) {
+        String sql = "UPDATE Product\n"
+                + "SET Pro_Quantity = \n"
+                + "((Select Pro_Quantity from Product where Pro_Id LIKE ?) - ?)\n"
+                + "Where Pro_Id LIKE ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, Pro_ID);
+            statement.setInt(2, Quantity);
+            statement.setString(3, Pro_ID);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public boolean isRated(String UserId, String ProductId) {
+        try {
+            String sql = "SELECT ISNULL(COUNT(UserId),0) as rated FROM [Rate] WHERE ProductId = ? AND UserId = ?";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, ProductId);
+            statement.setString(2, UserId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("rated")!=0;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
+    public void deleteProduct(String id) {
         try {
             DBContext conn2 = new DBContext();
             String sql = "DELETE FROM Product\n"
@@ -212,4 +283,3 @@ public class ProductDAO  {
     }
 
 }
-

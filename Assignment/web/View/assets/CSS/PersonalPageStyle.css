@@ -50,16 +50,21 @@ body{
     color: #fff !important;
 }
 
-item{
+.item{
     position: relative;
     cursor: pointer;
+}
+
+.item:hover{
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+    z-index: 10;
 }
 
 .item{
     display: flex;
     padding: 12px;
     border-color: #e8e8e8;
-    gap: 12px;
+    gap: 12px 0;
     border-width: 1px 1px 1px 0;
     margin-bottom: -1px;
     border: #f4f4f4 solid;

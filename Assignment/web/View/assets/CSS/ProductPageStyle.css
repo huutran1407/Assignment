@@ -1,0 +1,478 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 8, 2023, 12:22:36 AM
+    Author     : VHC
+*/
+
+body{
+    font-family: Helvetica,Arial,Roboto,sans-serif;
+    background-color:#f2f6fc;
+    color:#69707a;
+}
+
+.Product-Content{
+    margin: 20px auto;
+    min-height: 60vh;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-top: none;
+    max-width: 980px;
+}
+
+.Product-info_img{
+    height: 440px;
+}
+
+.Product-info_img>img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.Product-info_added{
+    background: #000;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    opacity: .8;
+    text-align: right;
+    padding: 4px;
+}
+
+.Product-info_added>span{
+    display: inline-block;
+    vertical-align: middle;
+    color: #f5f5f5;
+    margin-right: 4px;
+    font-size: 14px;
+}
+
+.Product-info_name{
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.Product-info_Price{
+    background-color: transparent;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    padding: 0;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #c90927;
+    font-weight: 700;
+}
+
+.Product-info_description{
+    padding-top: 10px;
+    text-align: justify;
+    margin-bottom: 10px;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+}
+
+.Product-feddback{
+    border-top: 2px solid #e5e5e5;
+}
+
+.User_Feedback{
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.Feddback-avatar{
+    width: 50px;
+    height: 50px;
+}
+
+.feedback_rate>svg{
+    height: 12px;
+    width: 12px;
+}
+
+.Feedback_content{
+    position: relative;
+    box-sizing: border-box;
+    font-size: .875rem;
+    color: rgba(0,0,0,.87);
+    word-break: break-word;
+}
+
+.Seller-info{
+    border-top: 2px solid #e5e5e5;
+    cursor: pointer;
+}
+
+.Seller-info_avatar,.Feddback-avatar{
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    display: inline-block;
+    border: 2px solid #e5e5e5;
+    padding: 0;
+    vertical-align: middle;
+    background: url(https://static.chotot.com/storage/default_images/default-avatar.webp) no-repeat;
+    background-size: contain;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.Seller-info_avatar{
+    height: 60px;
+    width: 60px;
+}
+
+.Seller-info_avatar>img,.Feddback-avatar>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Seller-info_profile{
+    flex: 1 1;
+    padding-left: 8px;
+    width: 100%;
+    max-width: calc(100% - 50px);
+}
+
+.Seller-info_profile>b{
+    margin: 5px 5px 3px 0;
+    font-size: 20px;
+    flex: 1 1;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.Seller-Phone{
+    color: #fff;
+    background-color: #33a837;
+}
+
+.Seller-Phone{
+    display: block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 8px 10px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    font-size: 13px;
+    transition: background-color .2s ease-in-out;
+    height: 42px;
+}
+
+.Seller-Phone>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Phone_icon{
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+
+
+.Product_Quamtity{
+    color: #757575;
+    margin-top: 16px;
+    font-size: 12px;
+}
+
+.Quantity_button{
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    font-size: .875rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .1s cubic-bezier(.4,0,.6,1);
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 2px;
+    background: transparent;
+    color: rgba(0,0,0,.8);
+    width: 32px;
+    height: 32px;
+}
+
+.Quantity_button:focus,.Quantity_input:focus{
+    outline: none;
+}
+
+.Quantity_button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.Quantity_input{
+    width: 50px;
+    height: 32px;
+    border: 2px solid #e5e5e5;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: text;
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+/*disable number input arrow*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.AddCart-btn{
+    flex-direction: row;
+    position: relative;
+    overflow: visible;
+    outline: 0;
+    background: #addcaf;
+    color: #222;
+    border: 1px solid #85cb87;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.03);
+    min-width: 80px;
+    width: 60%;
+    max-width: 250px;
+}
+
+.icon-add-to-cart{
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    position: relative;
+    margin-right: 10px;
+    color: #222;
+    stroke: #222;
+    font-size: 1.25rem;
+}
+
+.Buy-btn{
+    min-width: 80px;
+    max-width: 250px;
+    width: 35%;
+    font-size: 16px;
+    height: 48px;
+    padding: 0 20px;
+    background: #33a837;
+    font-weight: 700;
+    color: #fff;
+}
+
+.comments{
+    border-top: 2px solid #e5e5e5;
+}
+
+.User-Rating_input>textarea{
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+    line-height: 20px;
+    height: 100px;
+    resize: none;
+}
+
+
+
+
+/*Payment Style*/
+.Payment{
+    background-color: rgba(12,12,12,0.5);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 9999;
+}
+
+.Payment_window{
+    vertical-align: middle;
+    background-color: #fff;
+    width: 50%;
+    min-width: 300px;
+    opacity: 1;
+}
+
+.Product_preview{
+    border: 2px solid orange;
+    background-color: #f2f6fc;
+}
+
+.Product_img{
+    width: 35%;
+    max-height: 150px;
+    max-width: 150px;
+    height: 20%;
+}
+
+.Product_img>img{
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.Product_preview input{
+    border: none;
+    outline: none;
+    cursor: none;
+}
+
+.Payment_method{
+    background-color: #f2f6fc;
+    border: 2px solid orange;
+    height: 80px;
+}
+
+.Payment_method>label{
+    height: 100%;
+}
+
+.Payment_method>label>span{
+    border-right: 2px solid orange;
+}
+
+.Payment_method>label>select{
+    background-color: #f2f6fc;
+    height: 100%;
+    width: calc(100%/3);
+    border: none;
+    outline: none;
+}
+
+.CustomerInfo{
+    background-color: #f2f6fc;
+    border: 2px solid orange;
+}
+
+.CustomerInfo input{
+    background-color: #f2f6fc;
+    width: 90%;
+    
+}
+
+.OrderResult{
+    height: 80px;
+    background-color: #f2f6fc;
+}
+
+.OrderResult_btn{
+    width: 40%;
+}
+
+.Purchase{
+     max-width: 150px;
+    width: 50%;
+    background-color: coral;
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+    border: none;
+}
+.Cancel{
+    max-width: 100px;
+    width: 45%;
+    color: #fff;
+    font-weight: 700;
+    background-color: #222;
+    margin: 0;
+    border: none;
+}
+
+.OrderResult input{
+    border: none;
+    outline: none;
+    cursor: none;
+    min-width: fit-content;
+}
+
+.OrderResult_btn .btn{
+    display: flex;
+    align-items: center;
+}
+
+
+/*Rating style*/
+
+.rating input {
+    display: none;
+}
+.rating {
+    display: flex;
+}
+.rating > label {
+    display: block;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    color: orange;
+    font-family: sans-serif;
+    opacity: 0.33;
+    transition: opacity .2s; /* OPTIONAL */
+}
+
+#star-1:checked ~ label[for="star-1"],
+#star-1:hover ~ label[for="star-1"],
+
+#star-2:checked ~ label[for="star-1"],
+#star-2:checked ~ label[for="star-2"],
+#star-2:hover ~ label[for="star-1"],
+#star-2:hover ~ label[for="star-2"],
+
+#star-3:checked ~ label[for="star-1"],
+#star-3:checked ~ label[for="star-2"],
+#star-3:checked ~ label[for="star-3"],
+#star-3:hover ~ label[for="star-1"],
+#star-3:hover ~ label[for="star-2"],
+#star-3:hover ~ label[for="star-3"],
+
+#star-4:checked ~ label[for="star-1"],
+#star-4:checked ~ label[for="star-2"],
+#star-4:checked ~ label[for="star-3"],
+#star-4:checked ~ label[for="star-4"],
+#star-4:hover ~ label[for="star-1"],
+#star-4:hover ~ label[for="star-2"],
+#star-4:hover ~ label[for="star-3"],
+#star-4:hover ~ label[for="star-4"],
+
+#star-5:checked ~ label[for="star-1"],
+#star-5:checked ~ label[for="star-2"],
+#star-5:checked ~ label[for="star-3"],
+#star-5:checked ~ label[for="star-4"],
+#star-5:checked ~ label[for="star-5"],
+#star-5:hover ~ label[for="star-1"],
+#star-5:hover ~ label[for="star-2"],
+#star-5:hover ~ label[for="star-3"],
+#star-5:hover ~ label[for="star-4"],
+#star-5:hover ~ label[for="star-5"] {
+    opacity: 1;
+}

@@ -4,6 +4,11 @@
  */
 package entity;
 
+import dal.ProductDAO;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -128,6 +133,31 @@ public class Users {
         this.Avatar = Avatar;
     }
     
+    public boolean isRatedProduct(String PID){
+        ProductDAO pDAO = new ProductDAO();
+        return pDAO.isRated(UserId, PID);
+    }
     
+    public String getDateDiff() {
+        //get current date
+        Date date2 = new Date();
+        // Get period between the first and the second date   
+        Period difference = Period.between(convertToLocalDateViaInstant(getJoinDate()), convertToLocalDateViaInstant(date2));
+        
+        String Year = difference.getYears()==0?"":(""+difference.getYears() + " Years ");
+        String Months = difference.getMonths()==0?"":(""+difference.getMonths() + " Months ");
+        String Days = difference.getDays()==0?"":(""+difference.getDays() + " Days ");
+        if(difference.getYears()==0&&difference.getMonths()==0&&difference.getDays()==0){
+            return "today";
+        }
+        
+        return Year + Months + Days + "ago";
+    }
+
+    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
     
 }

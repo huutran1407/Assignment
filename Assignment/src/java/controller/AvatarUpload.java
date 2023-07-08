@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.UsersDAO;
@@ -29,34 +28,37 @@ import java.util.Map;
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
 public class AvatarUpload extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AvatarUpload</title>");  
+            out.println("<title>Servlet AvatarUpload</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AvatarUpload at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AvatarUpload at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -64,12 +66,13 @@ public class AvatarUpload extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -77,10 +80,10 @@ public class AvatarUpload extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         Part filePart = request.getPart("avatar");
-        
+
         //get cookies
         Cookie[] cookies = request.getCookies();
         Map<String, Cookie> cookieMap = new HashMap<>();
@@ -89,42 +92,43 @@ public class AvatarUpload extends HttpServlet {
         }
         //get cookie by name
         Cookie UserID = cookieMap.get("loginId");
-        
+
         String Mess = "";
-        UsersDAO DAO =  new UsersDAO();
+        UsersDAO DAO = new UsersDAO();
         Users u = DAO.getUsersByID(UserID.getValue());
         String OldImgpath = u.getAvatar();
-        
+
         String path = Paths.get(getServletContext().getRealPath("")).getParent().getParent().toString()
-                    + File.separator + "web"
-                    + File.separator + "Database"
-                    + File.separator + "IMG"
-                    + File.separator + "UserAvatar";
-         String StorePath = "Database"
-                    + File.separator + "IMG"
-                    + File.separator + "UserAvatar"
-                    + File.separator + filePart.getSubmittedFileName(); 
-        if(UpdateFile(filePart, path, OldImgpath,UserID.getValue(), StorePath)){
+                + File.separator + "web"
+                + File.separator + "Database"
+                + File.separator + "IMG"
+                + File.separator + "UserAvatar";
+        String StorePath = "Database"
+                + File.separator + "IMG"
+                + File.separator + "UserAvatar"
+                + File.separator + filePart.getSubmittedFileName();
+        if (UpdateFile(filePart, path, OldImgpath, UserID.getValue(), StorePath)) {
             Mess = "Update Success";
-        }else{
+        } else {
             Mess = "Update file fail";
         }
 
         response.sendRedirect("profile");
     }
-    
-       private boolean UpdateFile(Part part, String uploadPath, String OldPath,String UserId, String StorePath) {
+
+    private boolean UpdateFile(Part part, String uploadPath, String OldPath, String UserId, String StorePath) {
         try {
             File uploadDir = new File(uploadPath);
-            File OldImgPath = new File(OldPath);
-            
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
-            
-            if(!(OldPath==null&&OldImgPath.exists())){
-                if(!DelFile(OldPath)){
-                    return false;
+
+            if (OldPath != null) {
+                File OldImgPath = new File(OldPath);
+                if (OldImgPath.exists()) {
+                    if (!DelFile(OldPath)) {
+                        return false;
+                    }
                 }
             }
 
@@ -150,8 +154,9 @@ public class AvatarUpload extends HttpServlet {
         return IMG.delete();
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
