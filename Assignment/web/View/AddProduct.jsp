@@ -44,7 +44,7 @@
                                         Category selection
                                     </label>
                                     <select name="productType" id="category-select" class="w-100">
-                                        <c:forEach var="c" items="${sessionScope.CatList}">
+                                        <c:forEach var="c" items="${requestScope.cList}">
                                             <option value="${c.getCategory_Id()}">${c.getCategory()}</option>
                                         </c:forEach>
                                     </select>

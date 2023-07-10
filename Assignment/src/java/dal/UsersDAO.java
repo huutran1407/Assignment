@@ -266,7 +266,7 @@ public class UsersDAO {
         }
         return 0;
     }
-    
+
     //get total number of rating
     public int getUserNumberRating(String User) {
         String sql = "SELECT ISNULL(COUNT(Rate.Rate),0) as count\n"
@@ -284,9 +284,9 @@ public class UsersDAO {
         }
         return 0;
     }
-    
+
     //get number of follower
-    public int getNumberFollower(String User){
+    public int getNumberFollower(String User) {
         String sql = "SELECT ISNULL(COUNT(FollowedId),0) as count\n"
                 + "FROM Follow\n"
                 + "WHERE FollowedId LIKE ?;";
@@ -302,9 +302,9 @@ public class UsersDAO {
         }
         return 0;
     }
-    
+
     //get number of following
-    public int getNumberFollowing(String User){
+    public int getNumberFollowing(String User) {
         String sql = "SELECT ISNULL(COUNT(UserId),0) as count\n"
                 + "FROM Follow\n"
                 + "WHERE UserId LIKE ?;";
@@ -320,8 +320,51 @@ public class UsersDAO {
         }
         return 0;
     }
+
+    public void followUser(String UserId, String FollowedId) {
+        String sql = "INSERT INTO Follow\n"
+                + "values(?,?)";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, FollowedId);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
-    
+    public void unFollowUser(String UserId, String FollowedId) {
+        String sql = "DELETE FROM Follow\n"
+                + "where UserId = ? AND FollowedId = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, FollowedId);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public boolean isFollowed(String UserId, String FollowedId) {
+        String sql = "select ISNULL(COUNT(UserId),0) as count\n"
+                + "from Follow\n"
+                + "where UserId = ? AND FollowedId = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, FollowedId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count")!=0;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public void deleteUser(String id) {
         try {
             DBContext conn2 = new DBContext();

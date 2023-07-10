@@ -129,6 +129,58 @@ public class ProductDAO {
         }
         return null;
     }
+    
+    public ArrayList<Products> getProductsByCategory(String CID){
+        ArrayList<Products> products = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Product] WHERE Pro_Type = ? AND Pro_Status = 1";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, CID);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Products s = new Products();
+                s.setProId(rs.getString("Pro_Id"));
+                s.setPro_Name(rs.getString("Pro_Name"));
+                s.setPro_Quantity(rs.getInt("Pro_Quantity"));
+                s.setPro_Type(rs.getString("Pro_Type"));
+                s.setPro_Seller(rs.getString("Pro_Seller"));
+                s.setPro_img(rs.getString("Pro_img"));
+                s.setPro_des(rs.getString("Pro_description"));
+                s.setPro_Price(rs.getFloat("Pro_Price"));
+                s.setAddDate(rs.getDate("Pro_AddDate"));
+                products.add(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
+    public ArrayList<Products> searchProducts(String search){
+        ArrayList<Products> products = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Product] WHERE Pro_Name LIKE ? AND Pro_Status = 1";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, "%"+search+"%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Products s = new Products();
+                s.setProId(rs.getString("Pro_Id"));
+                s.setPro_Name(rs.getString("Pro_Name"));
+                s.setPro_Quantity(rs.getInt("Pro_Quantity"));
+                s.setPro_Type(rs.getString("Pro_Type"));
+                s.setPro_Seller(rs.getString("Pro_Seller"));
+                s.setPro_img(rs.getString("Pro_img"));
+                s.setPro_des(rs.getString("Pro_description"));
+                s.setPro_Price(rs.getFloat("Pro_Price"));
+                s.setAddDate(rs.getDate("Pro_AddDate"));
+                products.add(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
 
     //Add Product to database
     public void insertProduct(String pName, int pQuantity, String pType, String pSeller, String pImg, String pDescription, float pPrice) {

@@ -1,0 +1,55 @@
+body{
+    font-family: Helvetica,Arial,Roboto,sans-serif;
+    background-color:#f2f6fc;
+    color:#69707a;
+}
+
+.Product-content{
+    min-width: 350px;
+    min-height: 560px;
+    width: 50%;
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+}
+
+.item{
+    position: relative;
+    cursor: pointer;
+}
+
+.item:hover{
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+    z-index: 10;
+}
+
+.item{
+    display: flex;
+    padding: 12px;
+    border-color: #e8e8e8;
+    gap: 12px 0;
+    border-width: 1px 1px 1px 0;
+    margin-bottom: -1px;
+    border: #f4f4f4 solid;
+}
+
+.item_img{
+    position: relative;
+    cursor: pointer;
+}
+
+.item_img>img {
+    width: 108px;
+    height: 108px;
+    border-radius: 2px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.item_detail-name{
+    font-size: 16px;
+    color: #222;
+}
+
+.item_detail-price{
+    font-weight: 700;
+}
+

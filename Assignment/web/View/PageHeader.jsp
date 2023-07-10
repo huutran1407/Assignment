@@ -31,23 +31,16 @@
                          id="navcol-1">
                         <ul class="nav navbar-nav">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="${pageContext.request.contextPath}/View/Home.jsp?Content=AddProduct.jsp">Sell Product</a>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
-                                <div class="dropdown-menu" role="menu">
-                                    <a class="dropdown-item" role="presentation" href="#">First Item</a>
-                                    <a class="dropdown-item" role="presentation" href="#">Second Item</a>
-                                    <a class="dropdown-item" role="presentation" href="#">Third Item</a>
-                                </div>
+                                <a class="nav-link active" href="${pageContext.request.contextPath}/addpro">Sell Product</a>
                             </li>
                         </ul>
-                        <form class="form-inline mr-auto" target="_self">
-                            <div class="form-group">
+                            <form class="search-form form-inline mr-auto" method="get" action="${pageContext.request.contextPath}/productlist" style="width: 60%" target="_self">
+                            <div class="form-group w-100">
                                 <label for="search-field">
                                     <i class="fa fa-search"></i>
                                 </label>
-                                <input class="form-control search-field" type="search" name="search" id="search-field"/>
+                                <input class="form-control search-field" type="search" name="search" id="search-field" required placeholder="Search for product"/>
+                                <button type="submit" style="display: none;"></button>
                             </div>
                         </form>
                         <c:if test="${UserId==null}">

@@ -21,7 +21,7 @@
                 <div class="Item_List w-75 m-r-auto m-l-auto m-t-18 m-b-28">
                     <div class="ListItem dis-flex justify-content-center">
                     <c:forEach items="${Categories}" var="o">
-                        <div class="Item">
+                        <div class="Item" onclick="window.location.href='${pageContext.request.contextPath}/productlist?CID=${o.getCategory_Id()}'">
                             <img class="SampleImg img-fluid bo-cir m-auto" src="${pageContext.request.contextPath}/${o.getCategory_Img()}" alt="alt"/>
                             <div class="Item-name">${o.getCategory()}</div>
                         </div>

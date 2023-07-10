@@ -5,12 +5,7 @@
 
 package controller;
 
-import dal.CreditcardDAO;
-import dal.ProductDAO;
 import dal.UsersDAO;
-import entity.CreditCard;
-import entity.Products;
-import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,14 +14,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +21,8 @@ import java.util.Map;
  *
  * @author VHC
  */
-@WebServlet(name="PersonalPage", urlPatterns={"/ppage"})
-public class PersonalPage extends HttpServlet {
+@WebServlet(name="unFollowServlet", urlPatterns={"/unfollow"})
+public class unFollowServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -47,12 +34,7 @@ public class PersonalPage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String UserId = request.getParameter("UserId");
-        
-        ProductDAO pDAO = new ProductDAO();
-        UsersDAO DAO = new UsersDAO();
-         CreditcardDAO cardDAO = new CreditcardDAO();
+        String UID = request.getParameter("Follow");
         
         //get cookies
         Cookie[] cookies = request.getCookies();
@@ -63,45 +45,12 @@ public class PersonalPage extends HttpServlet {
         //get cookie by name
         Cookie UserID = cookieMap.get("loginId");
         
-        ArrayList<Products> ProductList = pDAO.getUserProduct(UserId);
-        ArrayList<Products> SoldOut = pDAO.getUserSoldOutProduct(UserId);
-        Users u = DAO.getUsersByID(UserId);
-        float rating = DAO.getUserRating(UserId);
-        int numRate = DAO.getUserNumberRating(UserId);
-        int numFollower = DAO.getNumberFollower(UserId);
-        int numFollowing = DAO.getNumberFollowing(UserId);
-        String JoinDateDiff = find(u.getJoinDate());
-        boolean isFollowed = DAO.isFollowed(UserID.getValue(), UserId);
-        CreditCard card = cardDAO.getCardByID(UserID.getValue());
+        UsersDAO uDAO = new UsersDAO();
         
-        request.setAttribute("card", card);
-        request.setAttribute("JoinDateDiff", JoinDateDiff);
-        request.setAttribute("Following", numFollowing);
-        request.setAttribute("Follower", numFollower);
-        request.setAttribute("NumRate", numRate);
-        request.setAttribute("Rating", rating);
-        request.setAttribute("Products", ProductList);
-        request.setAttribute("SoldOut", SoldOut);
-        request.setAttribute("User", u);
-        request.setAttribute("isFollowed", isFollowed);
+        uDAO.unFollowUser(UserID.getValue(), UID);
         
-        request.getRequestDispatcher("/View/Home.jsp?Content=PersonalPage.jsp").forward(request, response);
+        response.sendRedirect("ppage?UserId="+UID);
     } 
-    
-        protected String find(Date date1){   
-        //get current date
-        Date date2 = new Date();
-         // Get period between the first and the second date   
-        Period difference = Period.between(convertToLocalDateViaInstant(date1), convertToLocalDateViaInstant(date2));   
-
-        return ""+ difference.getYears() + " Years "+ difference.getMonths() + " Months " + difference.getDays() + " Days";
-    }
-        
-    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
-    return Instant.ofEpochMilli(dateToConvert.getTime())
-      .atZone(ZoneId.systemDefault())
-      .toLocalDate();
-}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

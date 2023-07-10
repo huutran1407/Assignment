@@ -5,8 +5,10 @@
 
 package controller;
 
+import dal.CategoryDAO;
 import dal.ProductDAO;
 import dal.UsersDAO;
+import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,6 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +70,11 @@ public class AddProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        CategoryDAO cDAO = new CategoryDAO();
+        ArrayList<Category> cList =  cDAO.getCategories();
+        
+        request.setAttribute("cList", cList);
+        request.getRequestDispatcher("/View/Home.jsp?Content=AddProduct.jsp").forward(request, response);
     } 
 
     /** 
@@ -101,7 +108,7 @@ public class AddProduct extends HttpServlet {
         ProductDAO DAO = new ProductDAO();
         DAO.insertProduct(pName, pQuantity, pType, UserID.getValue(), StoredPath, pDetails, pPrice);
         
-        response.sendRedirect("ppage");
+        response.sendRedirect("ppage?UserId="+UserID.getValue());
     }
     
     private String UpdateFile(Part part) {
