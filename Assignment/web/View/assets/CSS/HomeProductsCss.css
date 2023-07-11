@@ -104,6 +104,21 @@ body{
     font-weight: 700;
 }
 
+.paging-num{
+    text-decoration: none;
+    border: solid #222 thin;
+    padding: 5px 10px;
+}
+
+.paging-num:hover{
+    text-decoration: none;
+}
+
+.checked{
+    background-color: blue;
+    color: #222;
+}
+
 @media (min-width: 768px){
     .item {
         flex-direction: column;

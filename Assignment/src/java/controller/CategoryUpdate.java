@@ -74,10 +74,7 @@ public class CategoryUpdate extends HttpServlet {
             }
         }
         
-        ArrayList<Category> CatList = DAO.getCategories();
-        session.setAttribute("CatList", CatList);
-        request.setAttribute("Mess", Mess);
-        response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
+        response.sendRedirect("CategoryListServlet");
     }
 
     private boolean UpdateFile(Part part, String uploadPath, String OldPath,String CategoryID, String name, String StorePath) {

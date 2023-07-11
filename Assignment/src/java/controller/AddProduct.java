@@ -6,9 +6,11 @@
 package controller;
 
 import dal.CategoryDAO;
+import dal.CreditcardDAO;
 import dal.ProductDAO;
 import dal.UsersDAO;
 import entity.Category;
+import entity.CreditCard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,9 +72,23 @@ public class AddProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
+        }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
         CategoryDAO cDAO = new CategoryDAO();
         ArrayList<Category> cList =  cDAO.getCategories();
+        CreditcardDAO cardDAO = new CreditcardDAO();
         
+        
+        CreditCard card = cardDAO.getCardByID(UserID.getValue());
+        
+        request.setAttribute("card", card);
         request.setAttribute("cList", cList);
         request.getRequestDispatcher("/View/Home.jsp?Content=AddProduct.jsp").forward(request, response);
     } 

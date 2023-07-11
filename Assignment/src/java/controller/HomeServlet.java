@@ -38,12 +38,18 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        int Page = Integer.parseInt(request.getParameter("Page")==null?"1":request.getParameter("Page"));
+        int proPerPage = 8;
         
         ProductDAO pDAO = new ProductDAO();
         CategoryDAO CDAO = new CategoryDAO();
         ArrayList<Category> CatList = CDAO.getCategories();
-        ArrayList<Products> ProList = pDAO.getProducts();
+        int numOfPage = pDAO.getNumberOfPage(proPerPage);
+        ArrayList<Products> ProList = pDAO.getProductsOnPaging(Page, proPerPage);
         
+        
+        request.setAttribute("Page", Page);
+        request.setAttribute("numOfPage", numOfPage);
         request.setAttribute("CatList", CatList);
         request.setAttribute("ProList", ProList);
         

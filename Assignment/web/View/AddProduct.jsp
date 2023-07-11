@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/AddProductStyle.css?version=1"/>
     </head>
     <body>
+        <c:set var="card" value="${requestScope.card}"></c:set>
         <div class="container row justify-content-center p-0 m-0" style="background-color: #f2f6fc; max-width: 100vw;">
             <div class="col-xl-8 m-t-30 m-b-30">
                 <!-- Account details card-->
@@ -94,6 +95,13 @@
         </div>
 
         <script>
+            window.onload=function (event){
+                if('${card}' == ''){
+                    alert("Please link your creditcard before add product");
+                    window.location.href="${pageContext.request.contextPath}/View/Home.jsp?Content=AddPayment.jsp";
+                }
+            };
+            
             var loadFile = function (event) {
                 var reader = new FileReader();
                 reader.onload = function () {

@@ -4,6 +4,8 @@
  */
 package entity;
 
+import dal.ProductDAO;
+
 /**
  *
  * @author VHC
@@ -36,5 +38,9 @@ public class OrderItems {
         this.Quantity = Quantity;
     }
     
+    public Products getProduct(){
+        ProductDAO pDAO = new ProductDAO();
+        return pDAO.getProduct(ProId);
+    }
     
 }

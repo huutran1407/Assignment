@@ -9,19 +9,18 @@ import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
  *
  * @author VHC
  */
-public class CategoryDelete extends HttpServlet {
+@WebServlet(name = "CategoryListServlet", urlPatterns = {"/CategoryListServlet"})
+public class CategoryListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,23 +33,11 @@ public class CategoryDelete extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         CategoryDAO DAO = new CategoryDAO();
+        ArrayList<Category> CatList = DAO.getCategories();
+        request.setAttribute("CatList", CatList);
 
-        String CategoryID = request.getParameter("CategoryId");
-        String path = Paths.get(getServletContext().getRealPath("")).getParent().getParent().toString()
-                + File.separator + "web"
-                + File.separator + DAO.getCategory(CategoryID).getCategory_Img();
-
-        if (DelFile(path)) {
-            DAO.deleteById(CategoryID);
-        }
-        response.sendRedirect("CategoryListServlet");
-    }
-
-    private boolean DelFile(String FilePath) {
-        File IMG = new File(FilePath);
-        return IMG.delete();
+        request.getRequestDispatcher("/View/Home.jsp?Content=CategoryList.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

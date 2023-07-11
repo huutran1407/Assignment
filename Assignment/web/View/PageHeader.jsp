@@ -31,10 +31,10 @@
                          id="navcol-1">
                         <ul class="nav navbar-nav">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="${pageContext.request.contextPath}/addpro">Sell Product</a>
+                                <a class="nav-link active" href="${pageContext.request.contextPath}/addpro" onclick="return CardCheck()">Sell Product</a>
                             </li>
                         </ul>
-                            <form class="search-form form-inline mr-auto" method="get" action="${pageContext.request.contextPath}/productlist" style="width: 60%" target="_self">
+                        <form class="search-form form-inline mr-auto" method="get" action="${pageContext.request.contextPath}/productlist" style="width: 60%" target="_self">
                             <div class="form-group w-100">
                                 <label for="search-field">
                                     <i class="fa fa-search"></i>
@@ -53,15 +53,21 @@
                         </c:if>
                         <c:if test="${UserId!=null}">
                             <div class="flex-m">
-                                <span class="navbar-text"> 
-                                    <a href="#" class="login fa fa-user dropdown-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-size: 30px; margin-right: 20px"></a>
+                                <div class="cart-drawer-container">
+                                    <a class="cart-drawer fa fa-shopping-cart" href="${pageContext.request.contextPath}/cart">
+                                    </a>
+                                </div>
+                                <span class="navbar-text">
+                                    <a href="#" class="login dis-flex fa fa-user" data-toggle="dropdown" aria-expanded="false" style="font-size: 30px; margin-right: 20px">
+                                        <i class="fa fa-caret-down"></i>
+                                    </a>
                                     <div class="dropdown-menu" style="left: auto; right: 50px;" role="menu">
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/ppage?UserId=${UserId}">User Page</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/profile">Change Profile</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                                         <c:choose>
                                             <c:when test="${UserId.substring(0,2)=='AD'}">
-                                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/View/Home.jsp?Content=CategoryList.jsp">Categories List</a>
+                                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/CategoryListServlet">Categories List</a>
                                             </c:when>
                                         </c:choose>
                                     </div>
@@ -76,6 +82,8 @@
                 </nav>
             </div>
         </div>
+        <script>
+        </script>
     </body>
 
 </html>

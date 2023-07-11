@@ -18,7 +18,7 @@
         <h1 class="text-center m-t-40">Categories List</h1>
         <div class="container mx-auto mt-4 text-center">
             <div class="row justify-content-around">
-                <c:forEach items="${sessionScope.CatList}" var="s">
+                <c:forEach items="${requestScope.CatList}" var="s">
 
                     <div id="${s.getCategory_Id()}" class="col-md-4" style="width: 300px">
                         <div class="card">

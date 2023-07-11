@@ -57,8 +57,7 @@ public class CategoryDAO  {
         return null;
     }
     
-    public String insertCategory(String categoryName, String CategoryIMG ){
-        String mess = "Fail";
+    public void insertCategory(String categoryName, String CategoryIMG ){
         try {
             String CategoryId = getNewId();
             String sql = "INSERT INTO category "
@@ -68,11 +67,9 @@ public class CategoryDAO  {
             statement.setString(2, categoryName);
             statement.setString(3, CategoryIMG);
             statement.executeUpdate();
-            return "Success";
         } catch (Exception ex) {
             Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return mess;
     }
     
     //funtion to get ID for new Category

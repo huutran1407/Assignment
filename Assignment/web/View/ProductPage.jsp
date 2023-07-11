@@ -106,8 +106,8 @@
                                 <img class="img-fluid" src="${pageContext.request.contextPath}/${r.getUser().getAvatar()}"/>
                             </div>
 
-                            <div style="max-width: calc(100% - 50px);">
-                                <div>${r.getUser().getDisplayName()}</div>
+                            <div class="m-l-10" style="max-width: calc(100% - 50px);">
+                                <div class="font-weight-bold text-black">${r.getUser().getDisplayName()}</div>
                                 <div class="">
                                     <span class="feedback_rate rate_stars">
                                         <c:forEach begin="1" end="${r.getRate()}">
@@ -156,14 +156,14 @@
                         <div>
                             <span class="m-l-10" style="font-size: 14px; font-weight: 700;">
                                 <img class="Phone_icon" alt="loadingIcon" src="https://static.chotot.com/storage/chotot-icons/svg/white-phone.svg">
-                                ${s.getContact()}
+                                ${s.getContact()==''?'Unknown':s.getContact()}
                             </span>
                             <span style="font-size: 14px; font-weight: 700;">
                                 Contact to seller
                             </span>
                         </div>
                     </div>
-                    <c:if test="${p.getPro_Quantity()>0}">
+                    <c:if test="${p.getPro_Quantity()>0&&u.getUserId()!=s.getUserId()}">
                         <div class="Product_Quamtity dis-flex align-items-center">
                             <div>Quantity</div>
                             <div class="dis-flex align-items-center">
@@ -183,6 +183,10 @@
                         </div>
 
                         <div class="dis-flex justify-content-between m-t-30">
+                            <form class="AddCart_form dis-none" action="${pageContext.request.contextPath}/cart" method="post">
+                                <input type="text" name="ProId" value="${p.getProId()}">
+                                <input class="AddCart_form-Quantity" type="number" name="Pro_Quantity">
+                            </form>
                             <button style="cursor: pointer" type="button" class="btn AddCart-btn" aria-disabled="false">
                                 <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="icon-add-to-cart"><g><g><polyline fill="none" points=".5 .5 2.7 .5 5.2 11 12.4 11 14.5 3.5 3.7 3.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></polyline><circle cx="6" cy="13.5" r="1" stroke="none"></circle><circle cx="11.5" cy="13.5" r="1" stroke="none"></circle></g><line fill="none" stroke-linecap="round" stroke-miterlimit="10" x1="7.5" x2="10.5" y1="7" y2="7"></line><line fill="none" stroke-linecap="round" stroke-miterlimit="10" x1="9" x2="9" y1="8.5" y2="5.5"></line></g></svg>
                                 <span>Add To Cart</span>
@@ -191,7 +195,7 @@
                         </div>
                     </div>
                 </c:if>
-                <c:if test="${p.getPro_Quantity()<=0}">
+                <c:if test="${p.getPro_Quantity()<=0&&u.getUserId()!=s.getUserId()}">
                     <div class="m-t-20 dis-flex justify-content-center text-danger">
                         <h4 class="font-weight-bold">SOLD OUT</h4> 
                     </div>
@@ -274,10 +278,23 @@
             }
 
             document.querySelector(".Buy-btn").addEventListener("click", function () {
-                document.querySelector(".Payment").style.display = 'block';
-                document.querySelector("#Product-Quantity").value = document.querySelector(".Quantity_input").value;
-                var num = ${p.getPro_PriceNum()} * document.querySelector(".Quantity_input").value * 1000;
-                document.querySelector(".Product-info_Price>input").value = num.toLocaleString() + 'vnđ';
+                if(document.querySelector(".Quantity_input").value!=0){
+                    document.querySelector(".Payment").style.display = 'block';
+                    document.querySelector("#Product-Quantity").value = document.querySelector(".Quantity_input").value;
+                    var num = ${p.getPro_PriceNum()} * document.querySelector(".Quantity_input").value * 1000;
+                    document.querySelector(".Product-info_Price>input").value = num.toLocaleString() + 'vnđ';
+                }else{
+                    alert("Please enter quantity first");
+                }
+            });
+            
+            document.querySelector(".AddCart-btn").addEventListener("click", function () {
+                if(document.querySelector(".Quantity_input").value!=0){
+                    document.querySelector(".AddCart_form-Quantity").value = document.querySelector(".Quantity_input").value;
+                    document.querySelector(".AddCart_form").submit();
+                }else{
+                    alert("Please enter quantity first");
+                }
             });
 
             function FormCheck() {

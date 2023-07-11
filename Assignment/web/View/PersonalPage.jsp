@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/PersonalPageStyle.css?version=1"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/PersonalPageStyle.css"/>
     </head>
     <body>
         <c:set var="u" value="${requestScope.User}"></c:set>
@@ -34,7 +34,7 @@
                             <div class="card-header">User Profile</div>
                             <div class="card-body">
                                 <!-- Profile picture image-->
-                                <img style="width: 100px; height: 100px" class="img-account-profile rounded-circle mb-2" src="${pageContext.request.contextPath}/${u.getAvatar()!=null?u.getAvatar():'http://bootdey.com/img/Content/avatar/avatar1.png'}" alt="">
+                                <img class="img-account-profile rounded-circle mb-2" src="${pageContext.request.contextPath}/${u.getAvatar()!=null?u.getAvatar():'http://bootdey.com/img/Content/avatar/avatar1.png'}" alt="">
                             <div>
                                 <div class="font-weight-bold" style="font-size: 18px;">${u.getDisplayName()}</div>
                             </div>

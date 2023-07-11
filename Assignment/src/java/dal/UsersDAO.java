@@ -4,6 +4,8 @@
  */
 package dal;
 
+import entity.Cart;
+import entity.OrderItems;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -333,7 +335,7 @@ public class UsersDAO {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void unFollowUser(String UserId, String FollowedId) {
         String sql = "DELETE FROM Follow\n"
                 + "where UserId = ? AND FollowedId = ?";
@@ -357,12 +359,131 @@ public class UsersDAO {
             statement.setString(2, FollowedId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return rs.getInt("count")!=0;
+                return rs.getInt("count") != 0;
             }
         } catch (Exception ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public void updateIntoCart(String UserId, String ProId, int Quantity) {
+        String sql = "UPDATE UserCart\n"
+                + "SET Pro_Quantity = (Select Pro_Quantity from UserCart WHERE UserId = ? AND Pro_Id = ?) + ?\n"
+                + "WHERE UserId = ? AND Pro_Id = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, ProId);
+            statement.setInt(3, Quantity);
+            statement.setString(4, UserId);
+            statement.setString(5, ProId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public boolean isExistInCart(String Userid, String ProId) {
+        String sql = "select ROWCOUNT_BIG() as count\n"
+                + "from UserCart\n"
+                + "where UserId = ? AND Pro_Id = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, Userid);
+            statement.setString(2, ProId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public void insertIntoCart(String UserId, String ProId, int Quantity) {
+        if (isExistInCart(UserId, ProId)) {
+            updateIntoCart(UserId, ProId, Quantity);
+        } else {
+            String sql = "INSERT INTO UserCart\n"
+                    + "values\n"
+                    + "(?,?,?)";
+            try {
+                PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+                statement.setString(1, UserId);
+                statement.setString(2, ProId);
+                statement.setInt(3, Quantity);
+                statement.executeUpdate();
+            } catch (Exception e) {
+                Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+
+    public Cart getUserCart(String UserId) {
+        String sql = "select *\n"
+                + "from UserCart\n"
+                + "where UserId = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            ResultSet rs = statement.executeQuery();
+            Cart c = new Cart();
+            while (rs.next()) {
+                OrderItems o = new OrderItems();
+                o.setProId(rs.getString("Pro_Id"));
+                o.setQuantity(rs.getInt("Pro_Quantity"));
+                c.addItem(o);
+            }
+            return c;
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void AddToCart(String UserId, String Pro_Id, int Pro_Quantity) {
+        try {
+            DBContext conn2 = new DBContext();
+            String sql = "Insert Into UserCart\n"
+                    + "values\n"
+                    + "(?,?,?)";
+            PreparedStatement statement = conn2.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, Pro_Id);
+            statement.setInt(3, Pro_Quantity);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void DeleteCartItem(String UserId, String Pro_Id) {
+        try {
+            DBContext conn2 = new DBContext();
+            String sql = "DELETE FROM UserCart\n"
+                    + "where UserId = ? AND Pro_Id = ?";
+            PreparedStatement statement = conn2.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.setString(2, Pro_Id);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void clearUserCart(String UserId){
+        try {
+            DBContext conn2 = new DBContext();
+            String sql = "DELETE FROM UserCart\n"
+                    + "where UserId = ?";
+            PreparedStatement statement = conn2.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void deleteUser(String id) {

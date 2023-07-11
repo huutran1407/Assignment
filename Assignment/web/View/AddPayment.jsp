@@ -29,7 +29,7 @@
                             <form class="form" autocomplete="off" action="${pageContext.request.contextPath}/creditcard" method="post">
                                 <div class="form-group">
                                     <label for="cc_name">Card Holder's Name</label>
-                                    <input name="CardOwner" type="text" class="form-control" id="cc_name" pattern="\w+\w+.*" title="First and last name" required="required">
+                                    <input name="CardOwner" type="text" class="form-control" id="cc_name" title="First and last name" required="required">
                                 </div>
                                 <div class="form-group">
                                     <label>Card Number</label>

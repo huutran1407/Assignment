@@ -11,9 +11,41 @@ import java.util.ArrayList;
  * @author VHC
  */
 public class Cart {
-    private ArrayList<Products> ProList;
+    private ArrayList<OrderItems> ProList;
+
+    public Cart() {
+        this.ProList = new ArrayList<>();
+    }
+
+    public Cart(ArrayList<OrderItems> ProList) {
+        this.ProList = ProList;
+    }
+
+    public ArrayList<OrderItems> getProList() {
+        return ProList;
+    }
+
+    public void setProList(ArrayList<OrderItems> ProList) {
+        this.ProList = ProList;
+    }
     
-    void addToCart(Products e){
+    public void addItem(OrderItems e){
+        ProList.add(e);
+    }
+
+    public float getTotalPrice() {
+        float rs =0;
+        for(OrderItems o:ProList){
+            rs += o.getProduct().getPro_PriceNum()*o.getQuantity();
+        }
+        return rs;
+    }
+    
+    public String getTotalPriceString(){
+        return String.format("%,.0f vnd", getTotalPrice()*1000);
+    }
+    
+    void addToCart(OrderItems e){
         ProList.add(e);
     }
 }

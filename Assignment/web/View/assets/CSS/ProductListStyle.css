@@ -53,3 +53,19 @@ body{
     font-weight: 700;
 }
 
+.paging-num{
+    text-decoration: none;
+    border: solid #222 thin;
+    padding: 5px 10px;
+    bottom: 0;
+}
+
+.paging-num:hover{
+    text-decoration: none;
+}
+
+.checked{
+    background-color: blue;
+    color: #222;
+}
+

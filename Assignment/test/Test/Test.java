@@ -8,6 +8,7 @@ import dal.CategoryDAO;
 import dal.OrderDAO;
 import dal.ProductDAO;
 import dal.UsersDAO;
+import entity.Cart;
 import entity.Category;
 import entity.OrderItems;
 import java.util.ArrayList;
@@ -24,11 +25,16 @@ public class Test {
         ProductDAO pDAO = new ProductDAO();
         OrderDAO oDAO = new OrderDAO();
         
-        ArrayList<OrderItems> products = new ArrayList<>();
-        OrderItems o = new OrderItems("AD01CA015PD001", 1);
-        products.add(o);
-        oDAO.insertOrder("AD01", 0, "Online", "aaa", "0192364", "aaaa", products);
-        System.out.println(getPrice("1,200,000vnd"));
+        System.out.println(test.isExistInCart("US003", "AD01CA004PD001"));
+//        Cart c = test.getUserCart("US002");
+//        ArrayList<OrderItems> products = c.getProList();
+//        for(OrderItems o : products){
+//            System.out.println(o.getProduct().getPro_Name());
+//        }
+//        OrderItems o = new OrderItems("AD01CA015PD001", 1);
+//        products.add(o);
+//        oDAO.insertOrder("AD01", 0, "Online", "aaa", "0192364", "aaaa", products);
+//        System.out.println(getPrice("1,200,000vnd"));
 //        System.out.println(pDAO.getNewProductId("AD01", "CA001"));
 //        pDAO.insertProduct("Test", 0, "CA001", "AD01", "Test", "Test", 0);
 //        pDAO.deleteProduct("AD01CA001PD001");

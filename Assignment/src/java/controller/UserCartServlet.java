@@ -2,57 +2,66 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
+import dal.CreditcardDAO;
 import dal.UsersDAO;
 import entity.Cart;
+import entity.CreditCard;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.apache.tomcat.jni.SSLContext;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author VHC
  */
-public class Login extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="UserCartServlet", urlPatterns={"/cart"})
+public class UserCartServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    throws ServletException, IOException {
+        //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
         }
-    }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        UsersDAO uDAO = new UsersDAO();
+        CreditcardDAO cardDAO = new CreditcardDAO();
+        
+        Users u = uDAO.getUsersByID(UserID.getValue());
+        Cart c = uDAO.getUserCart(UserID.getValue());
+        CreditCard card = cardDAO.getCardByID(UserID.getValue());
+        
+        request.setAttribute("card", card);
+        request.setAttribute("User", u);
+        request.setAttribute("Cart", c);
+        request.getRequestDispatcher("/View/Home.jsp?Content=UserCart.jsp").forward(request, response);
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -60,13 +69,12 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -74,28 +82,28 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String u = request.getParameter("email/user").trim();
-        String p = request.getParameter("pass").trim();
-
-        UsersDAO users = new UsersDAO();
-        String LoginMess = users.checkLogin(u, p);
-        request.setAttribute("Mess", LoginMess);
-        if (LoginMess.equals("Success")) {
-            String UserId = users.getUserId(u);
-            Cookie Account = new Cookie("loginId", UserId);
-            Account.setMaxAge(60 * 60 * 24 * 365 * 10);//set cookie age to 10 years
-            response.addCookie(Account);
-            response.sendRedirect("home");
-        } else {
-            request.getRequestDispatcher("/View/LoginPage.jsp").forward(request, response);
+    throws ServletException, IOException {
+        String ProId = request.getParameter("ProId");
+        int Pro_Quantity = Integer.parseInt(request.getParameter("Pro_Quantity"));
+        
+        
+         //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
         }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        UsersDAO uDAO = new UsersDAO();
+        uDAO.insertIntoCart(UserID.getValue(), ProId, Pro_Quantity);
+        
+        response.sendRedirect("pdetail?PID="+ProId);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

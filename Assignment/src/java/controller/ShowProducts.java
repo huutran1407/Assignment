@@ -36,15 +36,21 @@ public class ShowProducts extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String CID = request.getParameter("CID");
         String search = request.getParameter("search");
+        int Page = Integer.parseInt(request.getParameter("Page")==null?"1":request.getParameter("Page"));
+        int proPerPage = 8;
+        
 
         ProductDAO pDAO = new ProductDAO();
+        int numOfPage = pDAO.getNumberOfPage(proPerPage);
+        request.setAttribute("Page", Page);
+        request.setAttribute("numOfPage", numOfPage);
 
         if (CID == null) {
-            ArrayList<Products> ProductList = pDAO.searchProducts(search);
+            ArrayList<Products> ProductList = pDAO.searchProducts(search,Page, proPerPage);
             request.setAttribute("plist", ProductList);
             request.getRequestDispatcher("/View/Home.jsp?Content=ProductList.jsp").forward(request, response);
         } else {
-            ArrayList<Products> ProductList = pDAO.getProductsByCategory(CID);
+            ArrayList<Products> ProductList = pDAO.getProductsByCategory(CID,Page, proPerPage);
 
             request.setAttribute("plist", ProductList);
             request.getRequestDispatcher("/View/Home.jsp?Content=ProductList.jsp").forward(request, response);

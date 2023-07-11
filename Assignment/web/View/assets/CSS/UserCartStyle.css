@@ -1,0 +1,240 @@
+body{
+    font-family: Helvetica,Arial,Roboto,sans-serif;
+    background-color:#f2f6fc;
+    color:#69707a;
+}
+
+.Product-content{
+    min-width: 350px;
+    min-height: 560px;
+    width: 50%;
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+}
+
+.item{
+    position: relative;
+}
+
+.item:hover{
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+    z-index: 10;
+}
+
+.item{
+    display: flex;
+    padding: 12px;
+    border-color: #e8e8e8;
+    gap: 12px 0;
+    border-width: 1px 1px 1px 0;
+    margin-bottom: -1px;
+    border: #f4f4f4 solid;
+}
+
+.item_img{
+    position: relative;
+    cursor: pointer;
+}
+
+.item_img>img {
+    width: 108px;
+    height: 108px;
+    border-radius: 2px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.item_detail-name{
+    font-size: 16px;
+    color: #222;
+}
+
+.item_detail-price{
+    font-weight: 700;
+}
+
+.paging-num{
+    text-decoration: none;
+    border: solid #222 thin;
+    padding: 5px 10px;
+    bottom: 0;
+}
+
+.paging-num:hover{
+    text-decoration: none;
+}
+
+.checked{
+    background-color: blue;
+    color: #222;
+}
+
+.Quantity_button{
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    font-size: .875rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .1s cubic-bezier(.4,0,.6,1);
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 2px;
+    background: transparent;
+    color: rgba(0,0,0,.8);
+    width: 32px;
+    height: 32px;
+}
+
+.Quantity_button:focus,.Quantity_input:focus{
+    outline: none;
+}
+
+.Quantity_button:hover{
+    background-color: #fff;
+}
+
+.Quantity_button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.Quantity_input{
+    width: 50px;
+    height: 32px;
+    border: 2px solid #e5e5e5;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: text;
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+/*disable number input arrow*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.CartSumary{
+    min-height: 50px;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.totalMoney{
+    font-size: 20px;
+}
+
+.Buy_btn{
+    padding: 10px;
+    margin: 10px;
+    background-color: #30a630;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+
+.Payment{
+    background-color: rgba(12,12,12,0.5);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 9999;
+}
+
+.Payment_window{
+    vertical-align: middle;
+    background-color: #fff;
+    width: 50%;
+    min-width: 300px;
+    opacity: 1;
+}
+
+.Payment_method{
+    background-color: #f2f6fc;
+    border: 2px solid orange;
+    height: 80px;
+}
+
+.Payment_method>label{
+    height: 100%;
+}
+
+.Payment_method>label>span{
+    border-right: 2px solid orange;
+}
+
+.Payment_method>label>select{
+    background-color: #f2f6fc;
+    height: 100%;
+    width: calc(100%/3);
+    border: none;
+    outline: none;
+}
+
+.CustomerInfo{
+    background-color: #f2f6fc;
+    border: 2px solid orange;
+}
+
+.CustomerInfo input{
+    background-color: #f2f6fc;
+    width: 90%;
+    
+}
+
+.OrderResult{
+    height: 80px;
+    background-color: #f2f6fc;
+}
+
+.OrderResult_btn{
+    width: 40%;
+}
+
+.Purchase{
+     min-width: 100px;
+    width: 45%;
+    background-color: coral;
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+    border: none;
+}
+.Cancel{
+    min-width: 100px;
+    width: 45%;
+    color: #fff;
+    font-weight: 700;
+    background-color: #222;
+    margin: 0;
+    border: none;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.OrderResult input{
+    border: none;
+    outline: none;
+    cursor: none;
+    min-width: fit-content;
+}
+
+.OrderResult_btn .btn{
+    display: flex;
+    align-items: center;
+}
+
+.display-none{
+    display: none !important;
+}
+

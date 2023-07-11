@@ -49,7 +49,7 @@ create table ordered(
 	OrderTotalPrice float,
 	OrderDate datetime DEFAULT CURRENT_TIMESTAMP,
 	PaymentMode varchar(255),
-	CustomerName varchar(255),
+	CustomerName nvarchar(255),
 	MobileNumber varchar(255),
 	Address varchar(255)
 

@@ -2,61 +2,60 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
-import dal.CategoryDAO;
-import entity.Category;
+import dal.ProductDAO;
+import dal.UsersDAO;
+import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author VHC
  */
-public class CategoryDelete extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="UpdateUserCart", urlPatterns={"/updatecart"})
+public class UpdateUserCart extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        CategoryDAO DAO = new CategoryDAO();
-
-        String CategoryID = request.getParameter("CategoryId");
-        String path = Paths.get(getServletContext().getRealPath("")).getParent().getParent().toString()
-                + File.separator + "web"
-                + File.separator + DAO.getCategory(CategoryID).getCategory_Img();
-
-        if (DelFile(path)) {
-            DAO.deleteById(CategoryID);
+    throws ServletException, IOException {
+        int Quantity = Integer.parseInt(request.getParameter("Quantity"));
+        String ProId = request.getParameter("ProId");
+        
+        //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
         }
-        response.sendRedirect("CategoryListServlet");
-    }
-
-    private boolean DelFile(String FilePath) {
-        File IMG = new File(FilePath);
-        return IMG.delete();
-    }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        UsersDAO uDAO = new UsersDAO();
+        uDAO.updateIntoCart(UserID.getValue(), ProId, Quantity);
+        
+        response.sendRedirect("cart");
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -64,13 +63,12 @@ public class CategoryDelete extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -78,13 +76,12 @@ public class CategoryDelete extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

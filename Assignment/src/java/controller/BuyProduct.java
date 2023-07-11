@@ -8,6 +8,8 @@ package controller;
 
 import dal.OrderDAO;
 import dal.ProductDAO;
+import dal.UsersDAO;
+import entity.Cart;
 import entity.OrderItems;
 import entity.Products;
 import java.io.IOException;
@@ -62,7 +64,29 @@ public class BuyProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String Payment = request.getParameter("PaymentMethod");
+        String CustomerName = request.getParameter("CustomberName");
+        String PhoneNumber = request.getParameter("PhoneNumber");
+        String Address = request.getParameter("Address");
+        
+        //get cookies
+        Cookie[] cookies = request.getCookies();
+        Map<String, Cookie> cookieMap = new HashMap<>();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
+        }
+        //get cookie by name
+        Cookie UserID = cookieMap.get("loginId");
+        
+        OrderDAO oDAO = new OrderDAO();
+        UsersDAO uDAO = new UsersDAO();
+        
+        Cart cart = uDAO.getUserCart(UserID.getValue());
+        
+        oDAO.insertOrder(UserID.getValue(), cart.getTotalPrice(), Payment, CustomerName, PhoneNumber, Address, cart.getProList());
+        uDAO.clearUserCart(UserID.getValue());
+        
+        response.sendRedirect("cart");
     } 
 
     /** 
@@ -94,9 +118,7 @@ public class BuyProduct extends HttpServlet {
         //get cookie by name
         Cookie UserID = cookieMap.get("loginId");
         
-        ProductDAO pDAO = new ProductDAO();
         OrderDAO oDAO = new OrderDAO();
-        Products p = pDAO.getProduct(ProId);
         
         OrderItems item = new OrderItems(ProId,Integer.parseInt(Quantity));
         ArrayList<OrderItems> OrderItems = new ArrayList<>();

@@ -99,18 +99,15 @@ public class CategoryUpload extends HttpServlet {
                     + File.separator + "Categories"
                     + File.separator + filePart.getSubmittedFileName();
 
-            String Mess = UploadedFile(filePart, path, name, StorePath);
+            UploadedFile(filePart, path, name, StorePath);
                 
-            CategoryDAO DAO = new CategoryDAO();
-            request.setAttribute("Mess", Mess);
-            ArrayList<Category> CatList = DAO.getCategories();
-            session.setAttribute("CatList", CatList);
-            response.sendRedirect("View/Home.jsp?Content=CategoryList.jsp");
+            
+            response.sendRedirect("CategoryListServlet");
         }
 
     }
 
-    private String UploadedFile(Part part, String uploadPath, String name, String StorePath) {
+    private void UploadedFile(Part part, String uploadPath, String name, String StorePath) {
         try {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -125,16 +122,9 @@ public class CategoryUpload extends HttpServlet {
             }
             part.write(uploadPath + File.separator + fileName);
             CategoryDAO DAO = new CategoryDAO();
-            String mess = DAO.insertCategory(name, StorePath);
-            if (mess.equalsIgnoreCase("Success")) {
-                return "Success insert Category into Database!!";
-            } else {
-                return "Fail to insert into database";
-            }
+            DAO.insertCategory(name, StorePath);
         } catch (IOException e) {
         }
-
-        return "fail to create file";
     }
 
     /**

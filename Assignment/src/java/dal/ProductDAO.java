@@ -47,6 +47,56 @@ public class ProductDAO {
         }
         return products;
     }
+    
+    //get 1 page products
+    public ArrayList<Products> getProductsOnPaging(int pageNum, int proPerPage) {
+        ArrayList<Products> products = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM [Product]\n"
+                    + "Where Pro_Quantity != 0\n"
+                    + "ORDER BY Pro_AddDate DESC\n"
+                    + "OFFSET ? rows\n"
+                    + "FETCH NEXT ? rows only";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setInt(1, (pageNum-1)*proPerPage);
+            statement.setInt(2, proPerPage);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Products s = new Products();
+                s.setProId(rs.getString("Pro_Id"));
+                s.setPro_Name(rs.getString("Pro_Name"));
+                s.setPro_Quantity(rs.getInt("Pro_Quantity"));
+                s.setPro_Type(rs.getString("Pro_Type"));
+                s.setPro_Seller(rs.getString("Pro_Seller"));
+                s.setPro_img(rs.getString("Pro_img"));
+                s.setPro_des(rs.getString("Pro_description"));
+                s.setPro_Price(rs.getFloat("Pro_Price"));
+                s.setAddDate(rs.getDate("Pro_AddDate"));
+                products.add(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
+    //get Total product
+    public int getNumberOfPage(int numPerPage) {
+        try {
+            String sql = "Select ISNULL(COUNT(Pro_Id),0) as count\n"
+                                +"from Product\n"
+                                + "where Pro_Status=1";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int total = rs.getInt("count");
+                return total%numPerPage==0?total/numPerPage:(total/numPerPage+1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 
     //get product list of a User
     public ArrayList<Products> getUserProduct(String Owner) {
@@ -130,12 +180,17 @@ public class ProductDAO {
         return null;
     }
     
-    public ArrayList<Products> getProductsByCategory(String CID){
+    public ArrayList<Products> getProductsByCategory(String CID,int pageNum, int proPerPage){
         ArrayList<Products> products = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Product] WHERE Pro_Type = ? AND Pro_Status = 1";
+            String sql = "SELECT * FROM [Product] WHERE Pro_Type = ? AND Pro_Status = 1"
+                    + "ORDER BY Pro_AddDate DESC\n"
+                    + "OFFSET ? rows\n"
+                    + "FETCH NEXT ? rows only";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, CID);
+            statement.setInt(2, (pageNum-1)*proPerPage);
+            statement.setInt(3, proPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Products s = new Products();
@@ -156,12 +211,17 @@ public class ProductDAO {
         return products;
     }
     
-    public ArrayList<Products> searchProducts(String search){
+    public ArrayList<Products> searchProducts(String search,int pageNum, int proPerPage){
         ArrayList<Products> products = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Product] WHERE Pro_Name LIKE ? AND Pro_Status = 1";
+            String sql = "SELECT * FROM [Product] WHERE Pro_Name LIKE ? AND Pro_Status = 1"
+                    + "ORDER BY Pro_AddDate DESC\n"
+                    + "OFFSET ? rows\n"
+                    + "FETCH NEXT ? rows only";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, "%"+search+"%");
+            statement.setInt(2, (pageNum-1)*proPerPage);
+            statement.setInt(3, proPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Products s = new Products();
@@ -290,8 +350,8 @@ public class ProductDAO {
     public void decsProductAmount(int Quantity, String Pro_ID) {
         String sql = "UPDATE Product\n"
                 + "SET Pro_Quantity = \n"
-                + "((Select Pro_Quantity from Product where Pro_Id LIKE ?) - ?)\n"
-                + "Where Pro_Id LIKE ?";
+                + "((Select Pro_Quantity from Product where Pro_Id = ?) - ?)\n"
+                + "Where Pro_Id = ?";
         try {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, Pro_ID);
