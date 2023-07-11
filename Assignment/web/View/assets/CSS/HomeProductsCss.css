@@ -115,8 +115,8 @@ body{
 }
 
 .checked{
-    background-color: blue;
-    color: #222;
+    background-color: #89CFF0;
+    color: #fff;
 }
 
 @media (min-width: 768px){

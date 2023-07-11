@@ -44,7 +44,7 @@ public class HomeServlet extends HttpServlet {
         ProductDAO pDAO = new ProductDAO();
         CategoryDAO CDAO = new CategoryDAO();
         ArrayList<Category> CatList = CDAO.getCategories();
-        int numOfPage = pDAO.getNumberOfPage(proPerPage);
+        int numOfPage = pDAO.getNumberOfPage(proPerPage,"%%","%%");
         ArrayList<Products> ProList = pDAO.getProductsOnPaging(Page, proPerPage);
         
         

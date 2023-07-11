@@ -54,7 +54,7 @@
                 </div>
                 <div class="Paging w-100 text-center m-b-18">
                     <c:forEach var="p" begin="1" end="${numOfPage}">
-                        <a href="${pageContext.request.contextPath}/home?Page=${p}" class="paging-num  ${p==page?'checked':''}">${p}</a>
+                        <a href="${pageContext.request.contextPath}/home?Page=${p}" class="paging-num  ${p==Page?'checked':''}">${p}</a>
                     </c:forEach>
                 </div>
             </c:if>

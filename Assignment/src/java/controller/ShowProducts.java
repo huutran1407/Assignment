@@ -41,7 +41,7 @@ public class ShowProducts extends HttpServlet {
         
 
         ProductDAO pDAO = new ProductDAO();
-        int numOfPage = pDAO.getNumberOfPage(proPerPage);
+        int numOfPage = pDAO.getNumberOfPage(proPerPage,CID,"");
         request.setAttribute("Page", Page);
         request.setAttribute("numOfPage", numOfPage);
 

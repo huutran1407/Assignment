@@ -81,12 +81,16 @@ public class ProductDAO {
     }
     
     //get Total product
-    public int getNumberOfPage(int numPerPage) {
+    public int getNumberOfPage(int numPerPage,String CateId,String Name) {
         try {
             String sql = "Select ISNULL(COUNT(Pro_Id),0) as count\n"
                                 +"from Product\n"
-                                + "where Pro_Status=1";
+                                + "where Pro_Status=1\n"
+                                + "and Pro_Type LIKE ?\n"
+                                + "and Pro_Name LIKE ?";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1,CateId);
+            statement.setString(2,Name);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int total = rs.getInt("count");

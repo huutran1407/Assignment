@@ -75,7 +75,7 @@
                 <c:if test="${!Cart.getProList().isEmpty()}">
                     <c:forEach var="p" items="${Cart.getProList()}">
                         <div class="item">
-                            <div class="item_img">
+                            <div class="item_img" onclick="window.location.href = '${pageContext.request.contextPath}/pdetail?PID=${p.getProduct().getProId()}';">
                                 <img src="${pageContext.request.contextPath}/${p.getProduct().getPro_img()}" alt="alt"/>
                             </div>
                             <div class="item_detail text-left m-l-15">

@@ -85,6 +85,7 @@ public class Login extends HttpServlet {
         if (LoginMess.equals("Success")) {
             String UserId = users.getUserId(u);
             Cookie Account = new Cookie("loginId", UserId);
+            Cookie Card = new Cookie("Card", UserId);
             Account.setMaxAge(60 * 60 * 24 * 365 * 10);//set cookie age to 10 years
             response.addCookie(Account);
             response.sendRedirect("home");
