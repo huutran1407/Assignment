@@ -31,7 +31,7 @@
                          id="navcol-1">
                         <ul class="nav navbar-nav">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="${pageContext.request.contextPath}/addpro" onclick="return CardCheck()">Sell Product</a>
+                                <a class="nav-link active" href="${pageContext.request.contextPath}/addpro" onclick="return checkLogedIn();">Sell Product</a>
                             </li>
                         </ul>
                         <form class="search-form form-inline mr-auto" method="get" action="${pageContext.request.contextPath}/productlist" style="width: 60%" target="_self">
@@ -83,6 +83,13 @@
             </div>
         </div>
         <script>
+            function checkLogedIn(){
+                if(${UserId==null}){
+                        alert("You need to login for selling products");
+                        return false;
+                }
+                return true;
+            }
         </script>
     </body>
 

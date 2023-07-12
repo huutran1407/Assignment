@@ -17,11 +17,12 @@
         <c:set var="Products" value="${requestScope.plist}"></c:set>
         <c:set var="Page" value="${requestScope.Page}"></c:set>
         <c:set var="numOfPage" value="${requestScope.numOfPage}"></c:set>
+        <c:set var="UserId" value="${cookie.loginId.value}"></c:set>
             <div class="Product-content m-r-auto m-l-auto m-t-30 p-b-20 m-b-30">
                 <div class="m-r-0 m-l-0 pos-relative">
                 <c:if test="${!Products.isEmpty()}">
                     <c:forEach var="p" items="${Products}">
-                        <div class="item" onclick="window.location.href = '${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}';">
+                        <div class="item" onclick="CheckLogedIn('${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}');">
                             <div class="item_img">
                                 <img src="${pageContext.request.contextPath}/${p.getPro_img()}" alt="alt"/>
                             </div>
@@ -49,5 +50,16 @@
                 </c:if>
             </div>
         </div>
+        <script>
+            function CheckLogedIn(url) {
+                    if (${UserId==null}) {
+                    alert("You need to login for buy products");
+                } else {
+                    window.location.href = url;
+                }
+
+            }
+            ;
+        </script>
     </body>
 </html>

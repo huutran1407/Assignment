@@ -18,6 +18,7 @@
         <c:set var="Categories" value="${requestScope.CatList}"></c:set>
         <c:set var="Page" value="${requestScope.Page}"></c:set>
         <c:set var="numOfPage" value="${requestScope.numOfPage}"></c:set>
+        <c:set var="UserId" value="${cookie.loginId.value}"></c:set>
             <div class="Category">
                 <h1 class="text-center m-b-0 m-t-30 font-weight-normal" style="font-size: 20px;">DANH MỤC SẢN PHẨM</h1>
                 <div class="Item_List w-75 m-r-auto m-l-auto m-t-18 m-b-28">
@@ -37,7 +38,7 @@
             <c:if test="${!Products.isEmpty()}">
                 <div class=" row w-75 m-r-auto m-l-auto m-t-18 m-b-18">
                     <c:forEach var="p" items="${Products}">
-                        <div class="col-md-3 item" onclick="window.location.href = '${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}';">
+                        <div class="col-md-3 item" onclick="CheckLogedIn('${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}')">
                             <div class="item_img text-center">
                                 <img src="${pageContext.request.contextPath}/${p.getPro_img()}" alt="alt"/>
                             </div>
@@ -61,6 +62,15 @@
         </div>
 
         <script>
+            function CheckLogedIn(url) {
+                if(${UserId==null}){
+                        alert("You need to login for buy products");
+                }else{
+                    window.location.href = url;
+                }
+                
+            };
+
             $('.ListItem').slick({
                 slidesToShow: 6,
                 slidesToScroll: 6,

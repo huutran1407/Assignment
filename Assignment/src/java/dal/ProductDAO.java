@@ -218,7 +218,7 @@ public class ProductDAO {
     public ArrayList<Products> searchProducts(String search,int pageNum, int proPerPage){
         ArrayList<Products> products = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Product] WHERE Pro_Name LIKE ? AND Pro_Status = 1"
+            String sql = "SELECT * FROM [Product] WHERE UPPER(Pro_Name) LIKE UPPER(?) AND Pro_Status = 1"
                     + "ORDER BY Pro_AddDate DESC\n"
                     + "OFFSET ? rows\n"
                     + "FETCH NEXT ? rows only";
