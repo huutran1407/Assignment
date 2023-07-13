@@ -89,8 +89,8 @@ public class ProductDAO {
                                 + "and Pro_Type LIKE ?\n"
                                 + "and Pro_Name LIKE ?";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
-            statement.setString(1,CateId);
-            statement.setString(2,Name);
+            statement.setString(1,"%"+CateId+"%");
+            statement.setString(2,"%"+Name+"%");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int total = rs.getInt("count");

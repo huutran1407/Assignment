@@ -63,6 +63,12 @@ public class PersonalPage extends HttpServlet {
         //get cookie by name
         Cookie UserID = cookieMap.get("loginId");
         
+        String Userid = "Guest";
+        
+        if(UserID != null){
+            Userid = UserID.getValue();
+        }
+        
         ArrayList<Products> ProductList = pDAO.getUserProduct(UserId);
         ArrayList<Products> SoldOut = pDAO.getUserSoldOutProduct(UserId);
         Users u = DAO.getUsersByID(UserId);
@@ -71,8 +77,8 @@ public class PersonalPage extends HttpServlet {
         int numFollower = DAO.getNumberFollower(UserId);
         int numFollowing = DAO.getNumberFollowing(UserId);
         String JoinDateDiff = find(u.getJoinDate());
-        boolean isFollowed = DAO.isFollowed(UserID.getValue(), UserId);
-        CreditCard card = cardDAO.getCardByID(UserID.getValue());
+        boolean isFollowed = DAO.isFollowed(Userid, UserId);
+        CreditCard card = cardDAO.getCardByID(Userid);
         
         request.setAttribute("card", card);
         request.setAttribute("JoinDateDiff", JoinDateDiff);

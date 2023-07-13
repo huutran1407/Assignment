@@ -66,7 +66,7 @@
                                 |
                                 <a style="text-decoration: none; color: black;" href="#" class="follower">Following: ${Following}</a>
                             </div>
-                            <c:if test="${u.getUserId()!=cookie.loginId.value}">
+                            <c:if test="${u.getUserId()!=cookie.loginId.value&&cookie.loginId.value!=null}">
                                 <c:choose>
                                     <c:when test="${isFollowed}">
                                         <button class="w-50" style="max-width: 250px; cursor: pointer;" onclick="window.location.href = '${pageContext.request.contextPath}/unfollow?Follow=${u.getUserId()}'">UnFollow</button>

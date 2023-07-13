@@ -183,7 +183,7 @@
                         </div>
 
                         <div class="dis-flex justify-content-between m-t-30">
-                            <form class="AddCart_form dis-none" action="${pageContext.request.contextPath}/cart" method="post">
+                            <form class="AddCart_form dis-none" action="${pageContext.request.contextPath}/cart" method="post" onsubmit="return checkLogin()">
                                 <input type="text" name="ProId" value="${p.getProId()}">
                                 <input class="AddCart_form-Quantity" type="number" name="Pro_Quantity">
                             </form>
@@ -230,7 +230,7 @@
                         </div>
                     </div>
 
-                    <c:if test="${u.getUserId()!=s.getUserId()&&!requestScope.isRated}">
+                    <c:if test="${u.getUserId()!=s.getUserId()&&!requestScope.isRated&&cookie.loginId.value!=null}">
                         <form action="${pageContext.request.contextPath}/rating?PID=${p.getProId()}" method="post" class="User-Rating_input">
 
                             <div class="rating dis-flex">
@@ -257,6 +257,16 @@
             </div>
         </div>
         <script>
+            function checkLogin() {
+                if (${cookie.loginId.value==null}) {
+                    alert("You need to login for add product to cart");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            ;
+
             function increase() {
                 var Quantity_input = document.querySelector(".Quantity_input");
                 var value = parseInt(Quantity_input.value);
@@ -278,22 +288,25 @@
             }
 
             document.querySelector(".Buy-btn").addEventListener("click", function () {
-                if(document.querySelector(".Quantity_input").value!=0){
+                if (document.querySelector(".Quantity_input").value > 0 && parseInt(document.querySelector(".Quantity_input").value)<=parseInt(document.querySelector(".Quantity_input").max)) {
                     document.querySelector(".Payment").style.display = 'block';
                     document.querySelector("#Product-Quantity").value = document.querySelector(".Quantity_input").value;
                     var num = ${p.getPro_PriceNum()} * document.querySelector(".Quantity_input").value * 1000;
                     document.querySelector(".Product-info_Price>input").value = num.toLocaleString() + 'vnđ';
-                }else{
-                    alert("Please enter quantity first");
+                } else {
+                    alert("Product quantity invalid");
                 }
             });
             
             document.querySelector(".AddCart-btn").addEventListener("click", function () {
-                if(document.querySelector(".Quantity_input").value!=0){
-                    document.querySelector(".AddCart_form-Quantity").value = document.querySelector(".Quantity_input").value;
-                    document.querySelector(".AddCart_form").submit();
-                }else{
-                    alert("Please enter quantity first");
+                if (document.querySelector(".Quantity_input").value > 0 && document.querySelector(".Quantity_input").value<=document.querySelector(".Quantity_input").max) {
+                        if (checkLogin()) {
+                        document.querySelector(".AddCart_form-Quantity").value = document.querySelector(".Quantity_input").value;
+                        document.querySelector(".AddCart_form").submit();
+                    }
+
+                } else {
+                    alert("Product quantity invalid");
                 }
             });
 

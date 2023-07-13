@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/ProductListStyle.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/ProductListStyle.css?version=1">
     </head>
     <body>
         <c:set var="Products" value="${requestScope.plist}"></c:set>
@@ -22,7 +22,7 @@
                 <div class="m-r-0 m-l-0 pos-relative">
                 <c:if test="${!Products.isEmpty()}">
                     <c:forEach var="p" items="${Products}">
-                        <div class="item" onclick="CheckLogedIn('${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}');">
+                        <div class="item" onclick="window.location.href='${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}'">
                             <div class="item_img">
                                 <img src="${pageContext.request.contextPath}/${p.getPro_img()}" alt="alt"/>
                             </div>
@@ -37,8 +37,8 @@
                         </div>
                     </c:forEach>
                     <div class="Paging w-100 text-center m-t-18 m-b-18 pos-absolute">
-                        <c:forEach var="p" begin="1" end="${numOfPage}">
-                            <a href="${pageContext.request.contextPath}/productlist?CID=${o.getCategory_Id()}%Page=${Page}" class="paging-num  ${p==page?'checked':''}">${p}</a>
+                        <c:forEach var="p" begin="${Page==1?Page:Page-1}" end="${numOfPage>1?Page+1:numOfPage}">
+                            <a href="${pageContext.request.contextPath}/productlist?CID=${o.getCategory_Id()}%Page=${Page}" class="paging-num  ${p==Page?'checked':''}">${p}</a>
                         </c:forEach>
                     </div>
                 </c:if>
@@ -51,15 +51,6 @@
             </div>
         </div>
         <script>
-            function CheckLogedIn(url) {
-                    if (${UserId==null}) {
-                    alert("You need to login for buy products");
-                } else {
-                    window.location.href = url;
-                }
-
-            }
-            ;
         </script>
     </body>
 </html>

@@ -54,10 +54,16 @@ public class ProductDetail extends HttpServlet {
         //get cookie by name
         Cookie UserID = cookieMap.get("loginId");
         
-        CreditCard card = cardDAO.getCardByID(UserID.getValue());
+        String Userid = "Guest";
+        
+        if(UserID != null){
+            Userid = UserID.getValue();
+        }
+        
+        CreditCard card = cardDAO.getCardByID(Userid);
         Products p = pDAO.getProduct(ProId);
         Users s = uDAO.getUsersByID(p.getPro_Seller());
-        Users u = uDAO.getUsersByID(UserID.getValue());
+        Users u = uDAO.getUsersByID(Userid);
         ArrayList<Rating> RateList = pDAO.getProductRates(ProId);
         
         request.setAttribute("card", card);
@@ -65,7 +71,7 @@ public class ProductDetail extends HttpServlet {
         request.setAttribute("Seller", s);
         request.setAttribute("User", u);
         request.setAttribute("Product", p);
-        request.setAttribute("isRated", pDAO.isRated(UserID.getValue(), ProId));
+        request.setAttribute("isRated", pDAO.isRated(Userid, ProId));
         request.getRequestDispatcher("/View/Home.jsp?Content=ProductPage.jsp").forward(request, response);
     } 
 

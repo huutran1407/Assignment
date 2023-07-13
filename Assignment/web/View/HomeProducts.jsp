@@ -38,7 +38,7 @@
             <c:if test="${!Products.isEmpty()}">
                 <div class=" row w-75 m-r-auto m-l-auto m-t-18 m-b-18">
                     <c:forEach var="p" items="${Products}">
-                        <div class="col-md-3 item" onclick="CheckLogedIn('${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}')">
+                        <div class="col-md-3 item" onclick="window.location.href='${pageContext.request.contextPath}/pdetail?PID=${p.getProId()}'">
                             <div class="item_img text-center">
                                 <img src="${pageContext.request.contextPath}/${p.getPro_img()}" alt="alt"/>
                             </div>
@@ -54,7 +54,7 @@
                     </c:forEach>
                 </div>
                 <div class="Paging w-100 text-center m-b-18">
-                    <c:forEach var="p" begin="1" end="${numOfPage}">
+                    <c:forEach var="p" begin="${Page==1?Page:Page-1}" end="${Page+1}">
                         <a href="${pageContext.request.contextPath}/home?Page=${p}" class="paging-num  ${p==Page?'checked':''}">${p}</a>
                     </c:forEach>
                 </div>
@@ -62,14 +62,6 @@
         </div>
 
         <script>
-            function CheckLogedIn(url) {
-                if(${UserId==null}){
-                        alert("You need to login for buy products");
-                }else{
-                    window.location.href = url;
-                }
-                
-            };
 
             $('.ListItem').slick({
                 slidesToShow: 6,

@@ -57,7 +57,6 @@ body{
     text-decoration: none;
     border: solid #222 thin;
     padding: 5px 10px;
-    bottom: 0;
 }
 
 .paging-num:hover{
@@ -65,7 +64,7 @@ body{
 }
 
 .checked{
-    background-color: blue;
-    color: #222;
+    background-color: #89CFF0;
+    color: #fff;
 }
 

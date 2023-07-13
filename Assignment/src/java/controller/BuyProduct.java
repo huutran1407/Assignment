@@ -118,13 +118,19 @@ public class BuyProduct extends HttpServlet {
         //get cookie by name
         Cookie UserID = cookieMap.get("loginId");
         
+        String UserId = "Guest";
+        
+        if(UserID!=null){
+            UserId = UserID.getValue();
+        }
+        
         OrderDAO oDAO = new OrderDAO();
         
         OrderItems item = new OrderItems(ProId,Integer.parseInt(Quantity));
         ArrayList<OrderItems> OrderItems = new ArrayList<>();
         OrderItems.add(item);
         
-        oDAO.insertOrder(UserID.getValue(), OrderPrice, Payment, CustomerName, PhoneNumber, Address, OrderItems);
+        oDAO.insertOrder(UserId, OrderPrice, Payment, CustomerName, PhoneNumber, Address, OrderItems);
         
         response.sendRedirect("pdetail?PID="+ProId);
     }
