@@ -25,7 +25,7 @@ public class ProductDAO {
         ArrayList<Products> products = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Product]\n"
-                    + "Where Pro_Quantity != 0\n"
+                    + "Where Pro_Status != 0\n"
                     + "ORDER BY Pro_AddDate DESC";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
@@ -53,7 +53,7 @@ public class ProductDAO {
         ArrayList<Products> products = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [Product]\n"
-                    + "Where Pro_Quantity != 0\n"
+                    + "Where Pro_Status != 0\n"
                     + "ORDER BY Pro_AddDate DESC\n"
                     + "OFFSET ? rows\n"
                     + "FETCH NEXT ? rows only";
@@ -133,7 +133,7 @@ public class ProductDAO {
     public ArrayList<Products> getUserSoldOutProduct(String Owner) {
         ArrayList<Products> products = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Product] WHERE Pro_Seller = ? AND Pro_Status = 0";
+            String sql = "SELECT * FROM [Product] WHERE Pro_Seller = ? AND Pro_Quantity = 0";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, Owner);
             ResultSet rs = statement.executeQuery();

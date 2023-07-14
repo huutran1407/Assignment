@@ -67,6 +67,7 @@
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                                         <c:choose>
                                             <c:when test="${UserId.substring(0,2)=='AD'}">
+                                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/userlist">Users List</a>
                                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/CategoryListServlet">Categories List</a>
                                             </c:when>
                                         </c:choose>

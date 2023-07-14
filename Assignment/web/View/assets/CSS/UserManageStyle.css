@@ -1,0 +1,84 @@
+body{
+    font-family: Helvetica,Arial,Roboto,sans-serif;
+    background-color:#f2f6fc;
+    color:#69707a;
+}
+
+.Product-content{
+    min-width: 350px;
+    min-height: 560px;
+    width: 50%;
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+}
+
+.item{
+    position: relative;
+    cursor: pointer;
+}
+
+.item:hover{
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+    z-index: 10;
+}
+
+.item{
+    display: flex;
+    padding: 12px;
+    border-color: #e8e8e8;
+    gap: 12px 0;
+    border-width: 1px 1px 1px 0;
+    margin-bottom: -1px;
+    border: #f4f4f4 solid;
+}
+
+.item_img{
+    width: 108px;
+    height: 108px;  
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    display: inline-block;
+    border: 2px solid #e5e5e5;
+    padding: 0;
+    vertical-align: middle;
+    background: url(https://static.chotot.com/storage/default_images/default-avatar.webp) no-repeat;
+    background-size: contain;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.item_img>img {
+    width: 108px;
+    height: 108px;
+    border-radius: 2px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.item_detail-name{
+    font-size: 16px;
+    color: #222;
+}
+
+.item_detail-price{
+    font-weight: 700;
+}
+
+.paging-num{
+    text-decoration: none;
+    border: solid #222 thin;
+    padding: 5px 10px;
+}
+
+.paging-num:hover{
+    text-decoration: none;
+}
+
+.checked{
+    background-color: #89CFF0;
+    color: #fff;
+}
+
+.Banned{
+    font-size: 30px;
+}

@@ -36,9 +36,9 @@
                             </div>
                         </div>
                     </c:forEach>
-                    <div class="Paging w-100 text-center m-t-18 m-b-18 pos-absolute">
-                        <c:forEach var="p" begin="${Page==1?Page:Page-1}" end="${numOfPage>1?Page+1:numOfPage}">
-                            <a href="${pageContext.request.contextPath}/productlist?CID=${o.getCategory_Id()}%Page=${Page}" class="paging-num  ${p==Page?'checked':''}">${p}</a>
+                    <div class="Paging w-100 text-center m-t-28">
+                        <c:forEach var="p" begin="${Page==1?Page:Page-1}" end="${Page==numOfPage?Page:Page+1}">
+                        <a href="${pageContext.request.contextPath}/home?Page=${p}" class="paging-num  ${p==Page?'checked':''}">${p}</a>
                         </c:forEach>
                     </div>
                 </c:if>

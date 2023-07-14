@@ -299,7 +299,7 @@
             });
             
             document.querySelector(".AddCart-btn").addEventListener("click", function () {
-                if (document.querySelector(".Quantity_input").value > 0 && document.querySelector(".Quantity_input").value<=document.querySelector(".Quantity_input").max) {
+                if (document.querySelector(".Quantity_input").value > 0 && parseInt(document.querySelector(".Quantity_input").value)<=parseInt(document.querySelector(".Quantity_input").max)) {
                         if (checkLogin()) {
                         document.querySelector(".AddCart_form-Quantity").value = document.querySelector(".Quantity_input").value;
                         document.querySelector(".AddCart_form").submit();

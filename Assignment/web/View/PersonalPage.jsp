@@ -76,7 +76,16 @@
                                     </c:when>
                                 </c:choose>
                             </c:if>
-
+                            <c:if test="${cookie.loginId.value.substring(0,2)=='AD'}">
+                                <c:choose>
+                                    <c:when test="${u.isBanned()}">
+                                        <button class="w-50 m-t-10 m-b-10" style="max-width: 250px; cursor: pointer;" onclick="window.location.href = '${pageContext.request.contextPath}/unban?UID=${u.getUserId()}'">Unban</button>
+                                    </c:when>
+                                    <c:when test="${!u.isBanned()}">
+                                        <button class="w-50 m-t-10 m-b-10" style="max-width: 250px; cursor: pointer;" onclick="window.location.href = '${pageContext.request.contextPath}/ban?UID=${u.getUserId()}'">Ban</button>
+                                    </c:when>
+                                </c:choose>
+                            </c:if>
                             <div>
                                 <div>
                                     <i class="fa fa-calendar"></i>

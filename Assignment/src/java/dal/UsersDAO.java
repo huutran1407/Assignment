@@ -21,11 +21,19 @@ public class UsersDAO {
 
     DBContext conn = new DBContext();
 
-    public ArrayList<Users> getUsers() {
+    public ArrayList<Users> getUsers(String search, int pageNum,int proPerPage) {
         ArrayList<Users> students = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Users]";
+            String sql = "SELECT * FROM [Users]\n"
+                    + "WHERE UserId LIKE ? OR DisplayName LIKE ?\n"
+                    + "ORDER BY UserId\n"
+                    + "OFFSET ? rows\n"
+                    + "FETCH NEXT ? rows only";
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, "%"+search+"%");
+            statement.setString(2, "%"+search+"%");
+            statement.setInt(3, (pageNum-1)*proPerPage);
+            statement.setInt(4, proPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Users s = new Users();
@@ -47,10 +55,30 @@ public class UsersDAO {
         }
         return students;
     }
+    
+    public int getNumberOfPage(int numPerPage,String Name) {
+        try {
+            String sql = "Select ISNULL(COUNT(UserId),0) as count\n"
+                                +"from Users\n"
+                                +"where DisplayName LIKE ? OR UserId LIKE ?";
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1,"%"+Name+"%");
+            statement.setString(2,"%"+Name+"%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int total = rs.getInt("count");
+                return total%numPerPage==0?total/numPerPage:(total/numPerPage+1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 
     public String checkLogin(String User, String Password) {
         String sql = "SELECT * FROM Users s\n"
-                + "WHERE s.Email = ? OR s.UserName = ?";
+                + "WHERE (s.Email = ? OR s.UserName = ?)\n"
+                + "AND s.Banned = 0";
         try {
             PreparedStatement statement = conn.getConnection().prepareStatement(sql);
             statement.setString(1, User);
@@ -365,6 +393,34 @@ public class UsersDAO {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public void banUser(String UserId){
+        String sql = "UPDATE Users\n"
+                + "SET\n"
+                + "Banned = 1\n"
+                + "Where UserId = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void unBanUser(String UserId){
+        String sql = "UPDATE Users\n"
+                + "SET\n"
+                + "Banned = 0\n"
+                + "Where UserId = ?";
+        try {
+            PreparedStatement statement = conn.getConnection().prepareStatement(sql);
+            statement.setString(1, UserId);
+            statement.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void updateIntoCart(String UserId, String ProId, int Quantity) {
