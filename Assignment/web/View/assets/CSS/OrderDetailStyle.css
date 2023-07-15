@@ -4,16 +4,42 @@ body{
     color:#69707a;
 }
 
-.Product-content{
-    min-width: 350px;
-    min-height: 560px;
-    width: 50%;
-    box-shadow: 0 1px 7px 0 rgba(0,0,0,.3);
+.Order{
+    min-width: 700px;
+    width: 90%;
+    justify-content: space-between;
+}
+
+.Order_Sumary{
+    font-size: 18px;
+    border: rgba(0,0,0,.3) solid thin;
+    height: fit-content;
+}
+
+.Order_header{
+    width: 100%;
+    background-color: #dcdcdc;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    vertical-align: middle;
+}
+
+.Order_header>span{
+    line-height: 200%;
+}
+
+.Order_Sumary-customer-info>span{
+    min-width: 200px;
+}
+
+.Order_Detail{
+    min-height: 576px;
+    border: rgba(0,0,0,.3) solid thin;
 }
 
 .item{
     position: relative;
-    cursor: pointer;
 }
 
 .item:hover{
@@ -32,19 +58,8 @@ body{
 }
 
 .item_img{
-    width: 108px;
-    height: 108px;  
-    border-radius: 50%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    display: inline-block;
-    border: 2px solid #e5e5e5;
-    padding: 0;
-    vertical-align: middle;
-    background: url(https://static.chotot.com/storage/default_images/default-avatar.webp) no-repeat;
-    background-size: contain;
-    background-color: #fff;
-    overflow: hidden;
+    position: relative;
+    cursor: pointer;
 }
 
 .item_img>img {
@@ -68,6 +83,7 @@ body{
     text-decoration: none;
     border: solid #222 thin;
     padding: 5px 10px;
+    bottom: 0;
 }
 
 .paging-num:hover{
@@ -75,10 +91,14 @@ body{
 }
 
 .checked{
-    background-color: #89CFF0;
-    color: #fff;
+    background-color: blue;
+    color: #222;
 }
 
-.Banned{
-    font-size: 30px;    
+.totalMoney{
+    font-size: 20px;
+}
+
+.display-none{
+    display: none !important;
 }

@@ -65,6 +65,7 @@
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/ppage?UserId=${UserId}">User Page</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/profile">Change Profile</a>
                                         <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/changePass">Change Password</a>
+                                        <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/orderlist">Ordered List</a>
                                         <c:choose>
                                             <c:when test="${UserId.substring(0,2)=='AD'}">
                                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/userlist">Users List</a>

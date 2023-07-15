@@ -51,7 +51,7 @@ create table ordered(
 	PaymentMode varchar(255),
 	CustomerName nvarchar(255),
 	MobileNumber varchar(255),
-	Address varchar(255)
+	Address nvarchar(255)
 
 	PRIMARY KEY (OrderId),
 	FOREIGN KEY (Order_Owner) REFERENCES Users(UserId)
@@ -62,7 +62,7 @@ create table Order_Detail(
 	Product_Id varchar(255) NOT NULL,
 	Product_Quantity int
 
-	PRIMARY KEY (OrderId),
+	PRIMARY KEY (OrderId,Product_Id),
 	FOREIGN KEY (Product_Id) REFERENCES Product(Pro_Id),
 	FOREIGN KEY (OrderId) REFERENCES ordered(OrderId) 
 )
