@@ -194,6 +194,13 @@ body{
     margin-right: 10px;
 }
 
+.delete_button{
+    background-color: #38ac34;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+}
+
 
 
 .Product_Quamtity{

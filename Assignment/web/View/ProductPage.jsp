@@ -12,8 +12,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/ProductPageStyle.css"/>
-
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/assets/CSS/ProductPageStyle.css?version=1"/>
+        
+        <c:set var="isSeller" value="${requestScope.isSeller}"></c:set>
         <c:set var="p" value="${requestScope.Product}"></c:set>
         <c:set var="u" value="${requestScope.User}"></c:set>
         <c:set var="s" value="${requestScope.Seller}"></c:set>
@@ -163,6 +164,9 @@
                             </span>
                         </div>
                     </div>
+                    <c:if test="${(u.getUserId().substring(0,2)=='AD')||isSeller}">
+                        <button class="delete_button btn w-100 m-t-20" onclick="deleteCheck()">Delete Product</button>
+                    </c:if>
                     <c:if test="${p.getPro_Quantity()>0&&u.getUserId()!=s.getUserId()}">
                         <div class="Product_Quamtity dis-flex align-items-center">
                             <div>Quantity</div>
@@ -317,6 +321,12 @@
                     return false;
                 }
                 return true;
+            }
+            
+            function deleteCheck(){
+                if(confirm("Do you want to delete this product")){
+                    window.location.href = '${pageContext.request.contextPath}/deleteproduct?PID=${p.getProId()}';
+                }
             }
         </script>
     </body>

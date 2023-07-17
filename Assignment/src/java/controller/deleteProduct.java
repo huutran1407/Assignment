@@ -5,29 +5,21 @@
 
 package controller;
 
-import dal.CreditcardDAO;
 import dal.ProductDAO;
-import dal.UsersDAO;
-import entity.CreditCard;
-import entity.Products;
-import entity.Rating;
-import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
  * @author VHC
  */
-public class ProductDetail extends HttpServlet {
+@WebServlet(name="deleteProduct", urlPatterns={"/deleteproduct"})
+public class deleteProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,42 +30,12 @@ public class ProductDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String ProId = request.getParameter("PID");
+        PrintWriter out = response.getWriter();
+        String PID = request.getParameter("PID");
         
-        UsersDAO uDAO = new UsersDAO();
         ProductDAO pDAO = new ProductDAO();
-        CreditcardDAO cardDAO = new CreditcardDAO();
-        
-         //get cookies
-        Cookie[] cookies = request.getCookies();
-        Map<String, Cookie> cookieMap = new HashMap<>();
-        for (Cookie cookie : cookies) {
-            cookieMap.put(cookie.getName(), cookie);
-        }
-        //get cookie by name
-        Cookie UserID = cookieMap.get("loginId");
-        
-        String Userid = "Guest";
-        
-        if(UserID != null){
-            Userid = UserID.getValue();
-        }
-        
-        CreditCard card = cardDAO.getCardByID(Userid);
-        Products p = pDAO.getProduct(ProId);
-        Users s = uDAO.getUsersByID(p.getPro_Seller());
-        Users u = uDAO.getUsersByID(Userid);
-        ArrayList<Rating> RateList = pDAO.getProductRates(ProId);
-        
-        request.setAttribute("isSeller", Userid.equals(p.getPro_Seller()));
-        request.setAttribute("card", card);
-        request.setAttribute("RateList", RateList);
-        request.setAttribute("Seller", s);
-        request.setAttribute("User", u);
-        request.setAttribute("Product", p);
-        request.setAttribute("isRated", pDAO.isRated(Userid, ProId));
-        request.getRequestDispatcher("/View/Home.jsp?Content=ProductPage.jsp").forward(request, response);
+        pDAO.deleteProduct(PID);
+        response.sendRedirect("home");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

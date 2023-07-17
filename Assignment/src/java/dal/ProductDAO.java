@@ -389,7 +389,7 @@ public class ProductDAO {
         try {
             DBContext conn2 = new DBContext();
             String sql = "DELETE FROM Product\n"
-                    + "WHERE Pro_id=?";
+                    + "WHERE Pro_Id=?";
             PreparedStatement statement = conn2.getConnection().prepareStatement(sql);
             statement.setString(1, id);
             statement.executeUpdate();
