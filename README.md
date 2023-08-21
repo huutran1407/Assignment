@@ -7,11 +7,11 @@ Buyer can see list of remained product from homepage or filter it by category or
 Buyer can rate product, comment product and add/remove product to cart.
 Admin can ban user, add/delete/edit categories and delete product.
 ## Built With
-JavaOOP
-JSP/Severlet
-HTML/CSS
-Javascript
-SQLServer
+ - JavaOOP
+ - JSP/Severlet
+ - HTML/CSS
+ - Javascript
+ - SQLServer
 ## About Project
 <div align="center">
   <h1> Project Source Code</h1>
