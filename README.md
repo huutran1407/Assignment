@@ -1,4 +1,4 @@
-# PRJ ASSIGNMENT | OoldButGold Web Store
+# PRJ ASSIGNMENT | OldButGold Web Store
 This is a Web for users to post their old products to sell, then other users can view and purchase them.
 ## Description
 Users can create account and change user infomation.
@@ -12,6 +12,31 @@ JSP/Severlet
 HTML/CSS
 Javascript
 SQLServer
+## About Project
+Project Source Code
+![Source code](https://github.com/huutran1407/Assignment/assets/68649461/691b39ff-ab0d-47a8-8a6c-6a0da7ce1723)
+
+Web home page
+![image](https://github.com/huutran1407/Assignment/assets/68649461/1bc7f4e2-4065-45d0-9639-62d842e7b505)
+
+Web Add Product
+![image](https://github.com/huutran1407/Assignment/assets/68649461/64146fcb-64b6-45eb-bccc-e9e83fb4a179)
+
+Web User's Cart
+![image](https://github.com/huutran1407/Assignment/assets/68649461/06e70486-ce6a-499e-afc6-6a786dc69827)
+
+Web Product's info
+![image](https://github.com/huutran1407/Assignment/assets/68649461/68216c72-0a76-4474-95ce-041c26d366ad)
+
+Web User's Page
+![image](https://github.com/huutran1407/Assignment/assets/68649461/34c50d54-4179-4ec8-b383-e03eef80dcff)
+
+Web User's Profile
+![image](https://github.com/huutran1407/Assignment/assets/68649461/aefb1ff1-9258-489e-91f9-f194fcc2a0c2)
+
+Web User's Order
+![image](https://github.com/huutran1407/Assignment/assets/68649461/e5598aff-0793-4df9-853d-3d36ff21166b)
+
 
 ## Copyright
 @Huutran1407
