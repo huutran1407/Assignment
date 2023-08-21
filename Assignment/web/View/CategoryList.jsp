@@ -11,50 +11,64 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/CategoryList.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/CategoryList.css?version=1">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/View/assets/CSS/ConfirmBoxStyle.css">
     </head>
     <body>
         <h1 class="text-center m-t-40">Categories List</h1>
-        <div class="container mx-auto mt-4 text-center">
-            <div class="row justify-content-around">
+        
+        <div id="Edit" class="dis-none">
+            
+        </div>
+        
+        <table class="container mx-auto mt-4 text-center">
+            <tr>
+                <th>Category ID</th>
+                <th>Category IMG</th>
+                <th>Category Name</th>
+                <th>Category Edit</th>
+                <th>Category Delete</th>
+            </tr>
+                
                 <c:forEach items="${requestScope.CatList}" var="s">
 
-                    <div id="${s.getCategory_Id()}" class="col-md-4" style="width: 300px">
-                        <div class="card">
-                            <img src="${pageContext.request.contextPath}/${s.getCategory_Img()}" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">${s.getCategory()}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">${s.getCategory_Id()}</h6>
-                                <p class="card-text"></p>
-                                <div class="card-function d-flex justify-content-between">
-                                    <div class="btn mr-2 w-45" onclick="EditCard('${s.getCategory_Id()}', '${s.getCategory()}')"><i class="fa fa-gear"></i> Edit</div>
-                                    <a style="cursor: pointer;" class="btn w-45" onclick="Confirm('Delete Category', 'Are you sure you want to delete this Category?', 'Yes', 'Cancel', '${pageContext.request.contextPath}/CategoryDelete?CategoryId=${s.getCategory_Id()}');"><i class="fa fa-trash" ></i> Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <tr class="">
+                            <td>
+                                ${s.getCategory_Id()}
+                            </td>
+                            <td>
+                                <img id="${s.getCategory_Id()}" src="${pageContext.request.contextPath}/${s.getCategory_Img()}" class="cateIMG img-fluid" alt="...">
+                            </td>
+                            <td>
+                                ${s.getCategory()}
+                            </td>
+                            <td>
+                                <a class="btn mr-2 w-45" onclick="EditCard('${s.getCategory_Id()}', '${s.getCategory()}')"><i class="fa fa-gear"></i> Edit</a>
+                            </td>
+                            <td>
+                                <a style="cursor: pointer;" class="btn w-45" onclick="Confirm('Delete Category', 'Are you sure you want to delete this Category?', 'Yes', 'Cancel', '${pageContext.request.contextPath}/CategoryDelete?CategoryId=${s.getCategory_Id()}');"><i class="fa fa-trash" ></i> Delete</a>
+                            </td>
+                        </tr>
 
                 </c:forEach>
-
-                <div class="col-md-4" style="width: 300px;">
+        </table>
+        
+        <div class="Add-cart " style="width: 400px;">
                     <form class="Add_Card card" style="text-decoration: none; height: 500px;" action="${pageContext.request.contextPath}/CategoryUpload" method="post" enctype="multipart/form-data">
                         <div class="Add_Cat_IMG  inputValue">
-                            <label id="imgInp" class="h-100" style="cursor: pointer;">
+                            <label id="imgInp" class="h-100 w-100" style="cursor: pointer;">
                                 <i class="imgInp_icon fa fa-4x fa-image pos-relative"></i>
                                 <img style="display: none;" class="output pos-relative top-0" src="" alt="alt"/>
                                 <input type="file" accept="image/*" name="img" onchange="loadFile(event)" required>
                             </label>
                         </div>
-                        <div class="inputValue">
+                        <div class="inputValue text-center">
                             <input type="text" name="CategoryName" placeholder="Category Name" required>
                         </div>
                         <button style="cursor: pointer;" class="btn m-auto w-45">Add Category</button>
                     </form>
                 </div>
 
-            </div>
-        </div>
 
         <script src="${pageContext.request.contextPath}/View/assets/js/ConfirmBoxScript.js"></script>
         <script>
@@ -83,13 +97,14 @@
                                     }
 
                                     function EditCard(Id, name) {
-                                        let card = document.getElementById(Id);
+                                        let img = document.getElementById(Id);
+                                        let card = document.getElementById("Edit");
 
-                                        var content =
-                                                "<form class='Add_Card card' style='text-decoration: none;' action=${pageContext.request.contextPath}/CategoryUpdate?CategoryId=" + Id + " method='post' enctype='multipart/form-data'>"
+                                        var content ="<div class='Add-cart' style='width: 400px;'>"
+                                                +"<form class='Add_Card card text-center' style='text-decoration: none;' action=${pageContext.request.contextPath}/CategoryUpdate?CategoryId=" + Id + " method='post' enctype='multipart/form-data'>"
                                                 + "<div class='Add_Cat_IMG inputValue'>"
                                                 + "<label id='imgInp' class='card-img-top' style='cursor: pointer;'>"
-                                                + "<img src=" + card.querySelector("img").src + " class='imgInp_icon'/>"
+                                                + "<img src=" + img.src + " class='imgInp_icon'/>"
                                                 + "<img style='display: none;' class='output' src='' alt='alt'/>"
                                                 + "<input type='file' accept='image/*' name='img' onchange='loadFile(event)'>"
                                                 + "</label>"
@@ -102,9 +117,11 @@
                                                 + "<button type='submit' style='cursor: pointer;' class='btn w-45'><i class='fa fa-share' ></i> Update</button>"
                                                 + "</div>"
                                                 + "</div>"
-                                                + "</form>";
+                                                + "</form>"
+                                                +"</div>";
 
                                         card.innerHTML = content;
+                                        card.style.display = "Block";
                                     }
         </script>
     </body>

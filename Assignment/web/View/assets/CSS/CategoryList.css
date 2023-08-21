@@ -22,6 +22,13 @@ body {
     object-fit: contain;
 }
 
+.cateIMG{
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
 /*.card-title, .card-text{
     color: #222;
 }*/
@@ -46,8 +53,16 @@ body {
     box-shadow: #222 1px 0 10px;
     text-decoration: underline;
 }
-.Add_Card{
-    
+
+#Edit{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 999;
+}
+
+.Add-cart{
+    margin: auto;
 }
 .Add_Cat_IMG{
     cursor: pointer;
@@ -57,7 +72,8 @@ body {
 
 .Add_Cat_IMG i{
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
     object-fit: contain;
 }
 

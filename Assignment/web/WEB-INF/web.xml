@@ -104,6 +104,13 @@
         <servlet-name>BuyProduct</servlet-name>
         <url-pattern>/buy</url-pattern>
     </servlet-mapping>
+    <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Public Pages</web-resource-name>
+        <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint />
+</security-constraint>
     <session-config>
         <session-timeout>
             30
