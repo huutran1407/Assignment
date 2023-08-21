@@ -14,7 +14,7 @@ Javascript
 SQLServer
 ## About Project
 <h1 align="center"> Project Source Code</h1>
-<img src="https://github.com/huutran1407/Assignment/assets/68649461/691b39ff-ab0d-47a8-8a6c-6a0da7ce1723" width="385px" align="center">
+<img src="https://github.com/huutran1407/Assignment/assets/68649461/691b39ff-ab0d-47a8-8a6c-6a0da7ce1723" width="600px" align="center">
 
 <h1 align="center"> Web home page</h1>
 ![image](https://github.com/huutran1407/Assignment/assets/68649461/1bc7f4e2-4065-45d0-9639-62d842e7b505)
